@@ -1,2 +1,1 @@
-# StFrancisFTC
-FTC code for St. Francis robotics team
+Saint Francis FTC
