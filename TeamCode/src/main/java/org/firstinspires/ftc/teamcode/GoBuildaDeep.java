@@ -66,18 +66,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
  */
 
 
-@TeleOp(name="FTC Starter Kit Example Robot (INTO THE DEEP)", group="Robot")
+@TeleOp(name="Into the Deep Main", group="Robot")
 //@Disabled
 public class GoBuildaDeep extends LinearOpMode {
-
-    /* Declare OpMode members. */
-    public DcMotor  leftDrive   = null; //the left drivetrain motor
-    public DcMotor  rightDrive  = null; //the right drivetrain motor
-    public DcMotor  armMotor    = null; //the arm motor
-    public CRServo  intake      = null; //the active intake servo
-    public Servo    wrist       = null; //the wrist servo
-
-
     /* This constant is the number of encoder ticks for each degree of rotation of the arm.
     To find this, we first need to consider the total gear reduction powering our arm.
     First, we have an external 20t:100t (5:1) reduction created by two spur gears.
@@ -132,20 +123,10 @@ public class GoBuildaDeep extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        /*
-        These variables are private to the OpMode, and are used to control the drivetrain.
-         */
-        double left;
-        double right;
-        double forward;
-        double rotate;
-        double max;
-
-
         /* Define and Initialize Motors */
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive"); //the left drivetrain motor
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive"); //the right drivetrain motor
-        armMotor   = hardwareMap.get(DcMotor.class, "left_arm"); //the arm motor
+        DcMotor leftDrive  = hardwareMap.get(DcMotor.class, "left_drive"); //the left drivetrain motor
+        DcMotor rightDrive = hardwareMap.get(DcMotor.class, "right_drive"); //the right drivetrain motor
+        DcMotor armMotor   = hardwareMap.get(DcMotor.class, "left_arm"); //the arm motor
 
 
         /* Most skid-steer/differential drive robots require reversing one motor to drive forward.
@@ -174,8 +155,8 @@ public class GoBuildaDeep extends LinearOpMode {
 
 
         /* Define and initialize servos.*/
-        intake = hardwareMap.get(CRServo.class, "intake");
-        wrist  = hardwareMap.get(Servo.class, "wrist_pivot");
+        CRServo intake = hardwareMap.get(CRServo.class, "intake");
+        Servo wrist  = hardwareMap.get(Servo.class, "wrist_pivot");
 
         /* Make sure that the intake is off, and the wrist is folded in. */
         intake.setPower(INTAKE_OFF);
@@ -193,8 +174,8 @@ public class GoBuildaDeep extends LinearOpMode {
 
             /* Set the drive and turn variables to follow the joysticks on the gamepad.
             the joysticks decrease as you push them up. So reverse the Y axis. */
-            forward = -gamepad1.left_stick_y;
-            rotate  = gamepad1.right_stick_x;
+            double forward = -gamepad1.left_stick_y;
+            double rotate  = gamepad1.right_stick_x;
 
 
             /* Here we "mix" the input channels together to find the power to apply to each motor.
@@ -203,11 +184,11 @@ public class GoBuildaDeep extends LinearOpMode {
             the right and left motors need to move in opposite directions. So we will add rotate to
             forward for the left motor, and subtract rotate from forward for the right motor. */
 
-            left  = forward + rotate;
-            right = forward - rotate;
+            double left  = forward + rotate;
+            double right = forward - rotate;
 
             /* Normalize the values so neither exceed +/- 1.0 */
-            max = Math.max(Math.abs(left), Math.abs(right));
+            double max = Math.max(Math.abs(left), Math.abs(right));
             if (max > 1.0)
             {
                 left /= max;
@@ -224,25 +205,22 @@ public class GoBuildaDeep extends LinearOpMode {
             These control the continuous rotation servo that pulls elements into the robot,
             If the user presses A, it sets the intake power to the final variable that
             holds the speed we want to collect at.
-            If the user presses X, it sets the servo to Off.
-            And if the user presses B it reveres the servo to spit out the element.*/
+            If the user presses B it reveres the servo to spit out the element.
+            And if the user doesn't press either set the servo to off
+            */
 
-            /* TECH TIP: If Else statements:
-            We're using an else if statement on "gamepad1.x" and "gamepad1.b" just in case
-            multiple buttons are pressed at the same time. If the driver presses both "a" and "x"
-            at the same time. "a" will win over and the intake will turn on. If we just had
-            three if statements, then it will set the intake servo's power to multiple speeds in
-            one cycle. Which can cause strange behavior. */
-
+            // probably extract this into a method
+            double intakeSpeed;
             if (gamepad1.a) {
-                intake.setPower(INTAKE_COLLECT);
-            }
-            else if (gamepad1.x) {
-                intake.setPower(INTAKE_OFF);
+                intakeSpeed = INTAKE_COLLECT;
             }
             else if (gamepad1.b) {
-                intake.setPower(INTAKE_DEPOSIT);
+                intakeSpeed = INTAKE_DEPOSIT;
             }
+            else {
+                intakeSpeed = INTAKE_OFF;
+            }
+            intake.setPower(intakeSpeed);
 
 
 
@@ -258,47 +236,47 @@ public class GoBuildaDeep extends LinearOpMode {
                 armPosition = ARM_COLLECT;
                 wrist.setPosition(WRIST_FOLDED_OUT);
                 intake.setPower(INTAKE_COLLECT);
-                }
+            }
 
-                else if (gamepad1.left_bumper){
-                    /* This is about 20° up from the collecting position to clear the barrier
-                    Note here that we don't set the wrist position or the intake power when we
-                    select this "mode", this means that the intake and wrist will continue what
-                    they were doing before we clicked left bumper. */
-                    armPosition = ARM_CLEAR_BARRIER;
-                }
+            else if (gamepad1.left_bumper){
+                /* This is about 20° up from the collecting position to clear the barrier
+                Note here that we don't set the wrist position or the intake power when we
+                select this "mode", this means that the intake and wrist will continue what
+                they were doing before we clicked left bumper. */
+                armPosition = ARM_CLEAR_BARRIER;
+            }
 
-                else if (gamepad1.y){
-                    /* This is the correct height to score the sample in the LOW BASKET */
-                    armPosition = ARM_SCORE_SAMPLE_IN_LOW;
-                }
+            else if (gamepad1.y){
+                /* This is the correct height to score the sample in the LOW BASKET */
+                armPosition = ARM_SCORE_SAMPLE_IN_LOW;
+            }
 
-                else if (gamepad1.dpad_left) {
-                    /* This turns off the intake, folds in the wrist, and moves the arm
-                    back to folded inside the robot. This is also the starting configuration */
-                    armPosition = ARM_COLLAPSED_INTO_ROBOT;
-                    intake.setPower(INTAKE_OFF);
-                    wrist.setPosition(WRIST_FOLDED_IN);
-                }
+            else if (gamepad1.dpad_left) {
+                /* This turns off the intake, folds in the wrist, and moves the arm
+                back to folded inside the robot. This is also the starting configuration */
+                armPosition = ARM_COLLAPSED_INTO_ROBOT;
+                intake.setPower(INTAKE_OFF);
+                wrist.setPosition(WRIST_FOLDED_IN);
+            }
 
-                else if (gamepad1.dpad_right){
-                    /* This is the correct height to score SPECIMEN on the HIGH CHAMBER */
-                    armPosition = ARM_SCORE_SPECIMEN;
-                    wrist.setPosition(WRIST_FOLDED_IN);
-                }
+            else if (gamepad1.dpad_right){
+                /* This is the correct height to score SPECIMEN on the HIGH CHAMBER */
+                armPosition = ARM_SCORE_SPECIMEN;
+                wrist.setPosition(WRIST_FOLDED_IN);
+            }
 
-                else if (gamepad1.dpad_up){
-                    /* This sets the arm to vertical to hook onto the LOW RUNG for hanging */
-                    armPosition = ARM_ATTACH_HANGING_HOOK;
-                    intake.setPower(INTAKE_OFF);
-                    wrist.setPosition(WRIST_FOLDED_IN);
-                }
+            else if (gamepad1.dpad_up){
+                /* This sets the arm to vertical to hook onto the LOW RUNG for hanging */
+                armPosition = ARM_ATTACH_HANGING_HOOK;
+                intake.setPower(INTAKE_OFF);
+                wrist.setPosition(WRIST_FOLDED_IN);
+            }
 
-                else if (gamepad1.dpad_down){
-                    /* this moves the arm down to lift the robot up once it has been hooked */
-                    armPosition = ARM_WINCH_ROBOT;
-                    intake.setPower(INTAKE_OFF);
-                    wrist.setPosition(WRIST_FOLDED_IN);
+            else if (gamepad1.dpad_down){
+                /* this moves the arm down to lift the robot up once it has been hooked */
+                armPosition = ARM_WINCH_ROBOT;
+                intake.setPower(INTAKE_OFF);
+                wrist.setPosition(WRIST_FOLDED_IN);
             }
 
 
