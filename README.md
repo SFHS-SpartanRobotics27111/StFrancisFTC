@@ -19,3 +19,10 @@ Team code for St. Francis
 -   Double check the files changed before you commit, especially any
     configuration files, as Android Studio can change them without telling you.
 
+# Running
+
+-   Set up the robot config on the Driver Hub
+-   Connect computer to robot wifi
+-   Make sure Android Studio device is set to the robot
+-   Run and stop the program in Android Studio
+-   Select and start the OpMode on the Driver Hub
