@@ -69,6 +69,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 @TeleOp(name = "Into the Deep Main", group = "Robot")
 //@Disabled
 public class GoBuildaDeep extends LinearOpMode {
+
+
+
     /* This constant is the number of encoder ticks for each degree of rotation of the arm.
     To find this, we first need to consider the total gear reduction powering our arm.
     First, we have an external 20t:100t (5:1) reduction created by two spur gears.
@@ -290,7 +293,7 @@ public class GoBuildaDeep extends LinearOpMode {
         /* Here we set the target position of our arm to match the variable that was selected
         by the driver.
         We also set the target velocity (speed) the motor runs at, and use setMode to run it.*/
-        armMotor.setTargetPosition((int) (armPosition + armPositionFudgeFactor));
+//        armMotor.setTargetPosition((int) (armPosition + armPositionFudgeFactor));
 
         ((DcMotorEx) armMotor).setVelocity(2100);
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
