@@ -313,10 +313,13 @@ public class GoBuildaDeep extends LinearOpMode {
 
         //armPositionFudgeFactor = FUDGE_FACTOR * (gamepad1.right_trigger + (-gamepad1.left_trigger));
 
-        if (gamepad1.left_trigger) {
-            while (gamepad1.left_trigger) {
+        if (gamepad1.dpad_up) {
+            while (gamepad1.dpad_up) {
                 armPosition += 0.2;
-                arm
+            }
+        } else if (gamepad1.dpad_down) {
+            while (gamepad1.dpad_down) {
+                armPosition -= 0.2;
             }
         }
 
