@@ -228,13 +228,19 @@ public class GoBuildaDeep extends LinearOpMode {
         if (gamepad1.a) {
             while (gamepad1.a) {
                 intakeSpeed = INTAKE_COLLECT;
+                intake.setPower(intakeSpeed);
             }
         } else if (gamepad1.b) {
-            intakeSpeed = INTAKE_DEPOSIT;
+            while (gamepad1.b) {
+                intakeSpeed = INTAKE_DEPOSIT;
+
+                intake.setPower(intakeSpeed);
+            }
         } else {
             intakeSpeed = INTAKE_OFF;
+            intake.setPower(intakeSpeed);
           }
-        intake.setPower(intakeSpeed);
+
 
 
 
@@ -244,53 +250,57 @@ public class GoBuildaDeep extends LinearOpMode {
             to start collecting. So it moves the armPosition to the ARM_COLLECT position,
             it folds out the wrist to make sure it is in the correct orientation to intake, and it
             turns the intake on to the COLLECT mode.*/
-            double Wrist_Position = 0.0;
+
+        //Right should be closer to +1 and Left should be closer to -1
+        double Wrist_Position = 0.0;
         if (gamepad1.left_bumper) {
             while (gamepad1.left_bumper) {
-                Wrist_Position -= WRIST_FOLDED_IN - 0.02;
+                Wrist_Position -= 0.02;
+                wrist.setPosition(Wrist_Position);
             }
         } else if (gamepad1.right_bumper) {
             while (gamepad1.right_bumper) {
-                Wrist_Position += WRIST_FOLDED_OUT + 0.02;
+                Wrist_Position += 0.02;
+                wrist.setPosition(Wrist_Position);
             }
         }
 
 
-        if (gamepad1.right_bumper) {
-            /* This is the intaking/collecting arm position */
+        /*if (gamepad1.right_bumper) {
+            //This is the intaking/collecting arm position
             armPosition = ARM_COLLECT;
             wrist.setPosition(WRIST_FOLDED_OUT);
             intake.setPower(INTAKE_COLLECT);
         } else if (gamepad1.left_bumper) {
-            /* This is about 20° up from the collecting position to clear the barrier
+            // This is about 20° up from the collecting position to clear the barrier
             Note here that we don't set the wrist position or the intake power when we
             select this "mode", this means that the intake and wrist will continue what
-            they were doing before we clicked left bumper. */
+            they were doing before we clicked left bumper.
             armPosition = ARM_CLEAR_BARRIER;
         } else if (gamepad1.y) {
-            /* This is the correct height to score the sample in the LOW BASKET */
+            // This is the correct height to score the sample in the LOW BASKET
             armPosition = ARM_SCORE_SAMPLE_IN_LOW;
         } else if (gamepad1.dpad_left) {
-            /* This turns off the intake, folds in the wrist, and moves the arm
-            back to folded inside the robot. This is also the starting configuration */
+            // This turns off the intake, folds in the wrist, and moves the arm
+            back to folded inside the robot. This is also the starting configuration
             armPosition = ARM_COLLAPSED_INTO_ROBOT;
             intake.setPower(INTAKE_OFF);
             wrist.setPosition(WRIST_FOLDED_IN);
         } else if (gamepad1.dpad_right) {
-            /* This is the correct height to score SPECIMEN on the HIGH CHAMBER */
+            // This is the correct height to score SPECIMEN on the HIGH CHAMBER
             armPosition = ARM_SCORE_SPECIMEN;
             wrist.setPosition(WRIST_FOLDED_IN);
         } else if (gamepad1.dpad_up) {
-            /* This sets the arm to vertical to hook onto the LOW RUNG for hanging */
+            // This sets the arm to vertical to hook onto the LOW RUNG for hanging
             armPosition = ARM_ATTACH_HANGING_HOOK;
             intake.setPower(INTAKE_OFF);
             wrist.setPosition(WRIST_FOLDED_IN);
         } else if (gamepad1.dpad_down) {
-            /* this moves the arm down to lift the robot up once it has been hooked */
+            // this moves the arm down to lift the robot up once it has been hooked
             armPosition = ARM_WINCH_ROBOT;
             intake.setPower(INTAKE_OFF);
             wrist.setPosition(WRIST_FOLDED_IN);
-        }
+        }*/
 
 
         /* Here we create a "fudge factor" for the arm position.
@@ -301,8 +311,14 @@ public class GoBuildaDeep extends LinearOpMode {
         than the other, it "wins out". This variable is then multiplied by our FUDGE_FACTOR.
         The FUDGE_FACTOR is the number of degrees that we can adjust the arm by with this function. */
 
-        armPositionFudgeFactor = FUDGE_FACTOR * (gamepad1.right_trigger + (-gamepad1.left_trigger));
+        //armPositionFudgeFactor = FUDGE_FACTOR * (gamepad1.right_trigger + (-gamepad1.left_trigger));
 
+        if (gamepad1.left_trigger) {
+            while (gamepad1.left_trigger) {
+                armPosition += 0.2;
+                arm
+            }
+        }
 
         /* Here we set the target position of our arm to match the variable that was selected
         by the driver.
