@@ -224,7 +224,7 @@ public class GoBuildaDeep extends LinearOpMode {
 
         // probably extract this into a method
         // Theoretically A button should intake while it is held
-        double intakeSpeed;
+        double intakeSpeed = 0;
         if (gamepad1.a) {
             while (gamepad1.a) {
                 intakeSpeed = INTAKE_COLLECT;
