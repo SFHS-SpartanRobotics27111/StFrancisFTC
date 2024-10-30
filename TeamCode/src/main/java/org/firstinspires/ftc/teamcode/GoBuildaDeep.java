@@ -113,8 +113,8 @@ public class GoBuildaDeep extends LinearOpMode {
     final double INTAKE_DEPOSIT = 0.5;
 
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
-    final double WRIST_FOLDED_IN = 1;
-    final double WRIST_FOLDED_OUT = 0.5;
+    final double WRIST_FOLDED_IN = 1.0;
+    final double WRIST_FOLDED_OUT = 0.0;
 
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
@@ -223,14 +223,17 @@ public class GoBuildaDeep extends LinearOpMode {
         */
 
         // probably extract this into a method
+        // Theoretically A button should intake while it is held
         double intakeSpeed;
         if (gamepad1.a) {
-            intakeSpeed = INTAKE_COLLECT;
+            while (gamepad1.a) {
+                intakeSpeed = INTAKE_COLLECT;
+            }
         } else if (gamepad1.b) {
             intakeSpeed = INTAKE_DEPOSIT;
         } else {
             intakeSpeed = INTAKE_OFF;
-        }
+          }
         intake.setPower(intakeSpeed);
 
 
@@ -241,6 +244,17 @@ public class GoBuildaDeep extends LinearOpMode {
             to start collecting. So it moves the armPosition to the ARM_COLLECT position,
             it folds out the wrist to make sure it is in the correct orientation to intake, and it
             turns the intake on to the COLLECT mode.*/
+            double Wrist_Position = 0.0;
+        if (gamepad1.left_bumper) {
+            while (gamepad1.left_bumper) {
+                Wrist_Position -= WRIST_FOLDED_IN - 0.02;
+            }
+        } else if (gamepad1.right_bumper) {
+            while (gamepad1.right_bumper) {
+                Wrist_Position += WRIST_FOLDED_OUT + 0.02;
+            }
+        }
+
 
         if (gamepad1.right_bumper) {
             /* This is the intaking/collecting arm position */
