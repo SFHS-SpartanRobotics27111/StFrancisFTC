@@ -66,7 +66,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
  */
 
 
-@TeleOp(name = "Into the Deep Main", group = "Robot")
+@TeleOp(name = "Into the Deep Nightly", group = "Robot")
 //@Disabled
 public class GoBuildaDeep extends LinearOpMode {
 
