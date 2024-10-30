@@ -31,41 +31,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
-/*
- * This OpMode is an example driver-controlled (TeleOp) mode for the goBILDA 2024-2025 FTC
- * Into The Deep Starter Robot
- * The code is structured as a LinearOpMode
- *
- * This robot has a two-motor differential-steered (sometimes called tank or skid steer) drivetrain.
- * With a left and right drive motor.
- * The drive on this robot is controlled in an "Arcade" style, with the left stick Y axis
- * controlling the forward movement and the right stick X axis controlling rotation.
- * This allows easy transition to a standard "First Person" control of a
- * mecanum or omnidirectional chassis.
- *
- * The drive wheels are 96mm diameter traction (Rhino) or omni wheels.
- * They are driven by 2x 5203-2402-0019 312RPM Yellow Jacket Planetary Gearmotors.
- *
- * This robot's main scoring mechanism includes an arm powered by a motor, a "wrist" driven
- * by a servo, and an intake driven by a continuous rotation servo.
- *
- * The arm is powered by a 5203-2402-0051 (50.9:1 Yellow Jacket Planetary Gearmotor) with an
- * external 5:1 reduction. This creates a total ~254.47:1 reduction.
- * This OpMode uses the motor's encoder and the RunToPosition method to drive the arm to
- * specific setpoints. These are defined as a number of degrees of rotation away from the arm's
- * starting position.
- *
- * Make super sure that the arm is reset into the robot, and the wrist is folded in before
- * you run start the OpMode. The motor's encoder is "relative" and will move the number of degrees
- * you request it to based on the starting position. So if it starts too high, all the motor
- * setpoints will be wrong.
- *
- * The wrist is powered by a goBILDA Torque Servo (2000-0025-0002).
- *
- * The intake wheels are powered by a goBILDA Speed Servo (2000-0025-0003) in Continuous Rotation mode.
- */
-
-
 @TeleOp(name = "Into the Deep Nightly", group = "Robot")
 //@Disabled
 public class GoBuildaDeep extends LinearOpMode {
@@ -106,6 +71,7 @@ public class GoBuildaDeep extends LinearOpMode {
     final double ARM_SCORE_SAMPLE_IN_LOW = 160 * ARM_TICKS_PER_DEGREE;
     final double ARM_ATTACH_HANGING_HOOK = 120 * ARM_TICKS_PER_DEGREE;
     final double ARM_WINCH_ROBOT = 15 * ARM_TICKS_PER_DEGREE;
+    final double ARM_MOVEMENT = 1 * ARM_TICKS_PER_DEGREE;
 
     /* Variables to store the speed the intake servo should be set at to intake, and deposit game elements. */
     final double INTAKE_COLLECT = -1.0;
@@ -113,15 +79,12 @@ public class GoBuildaDeep extends LinearOpMode {
     final double INTAKE_DEPOSIT = 0.5;
 
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
-    final double WRIST_FOLDED_IN = 1.0;
-    final double WRIST_FOLDED_OUT = 0.0;
-
-    /* A number in degrees that the triggers can adjust the arm position by */
-    final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
+    final double WRIST_FOLDED_IN = 0.8333;
+    final double WRIST_FOLDED_OUT = 0.5;
+    final double WRIST_CENTERED = 0.6667;
 
     /* Variables that are used to set the arm to a specific position */
     double armPosition = (int) ARM_COLLAPSED_INTO_ROBOT;
-    double armPositionFudgeFactor;
 
     // Define motors
     DcMotor leftDrive;
@@ -171,7 +134,7 @@ public class GoBuildaDeep extends LinearOpMode {
 
         /* Make sure that the intake is off, and the wrist is folded in. */
         intake.setPower(INTAKE_OFF);
-        wrist.setPosition(WRIST_FOLDED_IN);
+        wrist.setPosition(WRIST_CENTERED);
 
         /* Send telemetry message to signify robot waiting */
         telemetry.addLine("Robot Ready.");
@@ -251,82 +214,35 @@ public class GoBuildaDeep extends LinearOpMode {
             it folds out the wrist to make sure it is in the correct orientation to intake, and it
             turns the intake on to the COLLECT mode.*/
 
-        //Right should be closer to +1 and Left should be closer to -1
+        //The number correlating to the Wrist Position is an arbitrary one. 0-1 is a range of 270 degrees
         double Wrist_Position = 0.0;
         if (gamepad1.left_bumper) {
             while (gamepad1.left_bumper) {
-                Wrist_Position -= 0.02;
+                Wrist_Position -= 0.01;
                 wrist.setPosition(Wrist_Position);
             }
         } else if (gamepad1.right_bumper) {
             while (gamepad1.right_bumper) {
-                Wrist_Position += 0.02;
+                Wrist_Position += 0.01;
                 wrist.setPosition(Wrist_Position);
             }
         }
 
-
-        /*if (gamepad1.right_bumper) {
-            //This is the intaking/collecting arm position
-            armPosition = ARM_COLLECT;
-            wrist.setPosition(WRIST_FOLDED_OUT);
-            intake.setPower(INTAKE_COLLECT);
-        } else if (gamepad1.left_bumper) {
-            // This is about 20° up from the collecting position to clear the barrier
-            Note here that we don't set the wrist position or the intake power when we
-            select this "mode", this means that the intake and wrist will continue what
-            they were doing before we clicked left bumper.
-            armPosition = ARM_CLEAR_BARRIER;
-        } else if (gamepad1.y) {
-            // This is the correct height to score the sample in the LOW BASKET
-            armPosition = ARM_SCORE_SAMPLE_IN_LOW;
-        } else if (gamepad1.dpad_left) {
-            // This turns off the intake, folds in the wrist, and moves the arm
-            back to folded inside the robot. This is also the starting configuration
-            armPosition = ARM_COLLAPSED_INTO_ROBOT;
-            intake.setPower(INTAKE_OFF);
-            wrist.setPosition(WRIST_FOLDED_IN);
-        } else if (gamepad1.dpad_right) {
-            // This is the correct height to score SPECIMEN on the HIGH CHAMBER
-            armPosition = ARM_SCORE_SPECIMEN;
-            wrist.setPosition(WRIST_FOLDED_IN);
-        } else if (gamepad1.dpad_up) {
-            // This sets the arm to vertical to hook onto the LOW RUNG for hanging
-            armPosition = ARM_ATTACH_HANGING_HOOK;
-            intake.setPower(INTAKE_OFF);
-            wrist.setPosition(WRIST_FOLDED_IN);
-        } else if (gamepad1.dpad_down) {
-            // this moves the arm down to lift the robot up once it has been hooked
-            armPosition = ARM_WINCH_ROBOT;
-            intake.setPower(INTAKE_OFF);
-            wrist.setPosition(WRIST_FOLDED_IN);
-        }*/
-
-
-        /* Here we create a "fudge factor" for the arm position.
-        This allows you to adjust (or "fudge") the arm position slightly with the gamepad triggers.
-        We want the left trigger to move the arm up, and right trigger to move the arm down.
-        So we add the right trigger's variable to the inverse of the left trigger. If you pull
-        both triggers an equal amount, they cancel and leave the arm at zero. But if one is larger
-        than the other, it "wins out". This variable is then multiplied by our FUDGE_FACTOR.
-        The FUDGE_FACTOR is the number of degrees that we can adjust the arm by with this function. */
-
-        //armPositionFudgeFactor = FUDGE_FACTOR * (gamepad1.right_trigger + (-gamepad1.left_trigger));
-
+        //This code probably won't work cause of the code below it.
         if (gamepad1.dpad_up) {
             while (gamepad1.dpad_up) {
-                armPosition += 0.2;
+                armPosition += ARM_MOVEMENT;
             }
         } else if (gamepad1.dpad_down) {
             while (gamepad1.dpad_down) {
-                armPosition -= 0.2;
+                armPosition -= ARM_MOVEMENT;
             }
         }
 
         /* Here we set the target position of our arm to match the variable that was selected
         by the driver.
         We also set the target velocity (speed) the motor runs at, and use setMode to run it.*/
-//        armMotor.setTargetPosition((int) (armPosition + armPositionFudgeFactor));
+
 
         ((DcMotorEx) armMotor).setVelocity(2100);
         armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
