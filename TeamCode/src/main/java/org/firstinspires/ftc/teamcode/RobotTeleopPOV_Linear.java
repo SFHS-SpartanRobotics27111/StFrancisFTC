@@ -26,6 +26,41 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+/*
+ * This OpMode is an example driver-controlled (TeleOp) mode for the goBILDA 2024-2025 FTC
+ * Into The Deep Starter Robot
+ * The code is structured as a LinearOpMode
+ *
+ * This robot has a two-motor differential-steered (sometimes called tank or skid steer) drivetrain.
+ * With a left and right drive motor.
+ * The drive on this robot is controlled in an "Arcade" style, with the left stick Y axis
+ * controlling the forward movement and the right stick X axis controlling rotation.
+ * This allows easy transition to a standard "First Person" control of a
+ * mecanum or omnidirectional chassis.
+ *
+ * The drive wheels are 96mm diameter traction (Rhino) or omni wheels.
+ * They are driven by 2x 5203-2402-0019 312RPM Yellow Jacket Planetary Gearmotors.
+ *
+ * This robot's main scoring mechanism includes an arm powered by a motor, a "wrist" driven
+ * by a servo, and an intake driven by a continuous rotation servo.
+ *
+ * The arm is powered by a 5203-2402-0051 (50.9:1 Yellow Jacket Planetary Gearmotor) with an
+ * external 5:1 reduction. This creates a total ~254.47:1 reduction.
+ * This OpMode uses the motor's encoder and the RunToPosition method to drive the arm to
+ * specific setpoints. These are defined as a number of degrees of rotation away from the arm's
+ * starting position.
+ *
+ * Make super sure that the arm is reset into the robot, and the wrist is folded in before
+ * you run start the OpMode. The motor's encoder is "relative" and will move the number of degrees
+ * you request it to based on the starting position. So if it starts too high, all the motor
+ * setpoints will be wrong.
+ *
+ * The wrist is powered by a goBILDA Torque Servo (2000-0025-0002).
+ *
+ * The intake wheels are powered by a goBILDA Speed Servo (2000-0025-0003) in Continuous Rotation mode.
+ */
+
+
 
 //Need to test tomorrow for wrist movement and intake
 package org.firstinspires.ftc.teamcode;
