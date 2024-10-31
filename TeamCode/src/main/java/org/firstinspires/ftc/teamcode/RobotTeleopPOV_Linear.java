@@ -65,11 +65,11 @@
 //Need to test tomorrow for wrist movement and intake
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
@@ -86,19 +86,19 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="Tried and True TeleOp", group="Robot")
-@Disabled
+
 public class RobotTeleopPOV_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
     public DcMotor  leftDrive   = null;
     public DcMotor  rightDrive  = null;
-    public DcMotor  leftArm     = null;
-    public Servo    Wrist    = null;
-    public CRServo Intake    = null;
+    public DcMotor armMotor = null;
+    public Servo wrist = null;
+    public CRServo intake = null;
 
     double WristOffset = 0;
 
-    public static final double MID_SERVO   =  0.5 ;
+    public static final double MID_SERVO   =  0.6667 ;
     public static final double WRIST_SPEED  = 0.02 ;                 // sets rate to move servo
     public static final double ARM_UP_POWER    =  0.45 ;
     public static final double ARM_DOWN_POWER  = -0.45 ;
@@ -114,22 +114,22 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
         // Define and Initialize Motors
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-        leftArm = hardwareMap.get(DcMotor.class, "left_arm");
+        armMotor = hardwareMap.get(DcMotor.class, "left_arm");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
-        rightDrive.setDirection(DcMotor.Direction.FORWARD);
+        leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);
 
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Define and initialize ALL installed servos.
-        Wrist  = hardwareMap.get(Servo.class, "Wrist");
-        Intake = hardwareMap.get(CRServo.class, "Intake");
-        Wrist.setPosition(MID_SERVO);
+        wrist = hardwareMap.get(Servo.class, "wrist_pivot");
+        intake = hardwareMap.get(CRServo.class, "intake");
+        wrist.setPosition(MID_SERVO);
 
 
         // Send telemetry message to signify robot waiting;
@@ -145,7 +145,7 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
             // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
             // This way it's also easy to just drive straight, or just turn.
-            drive = -gamepad1.left_stick_y;
+            drive =  -gamepad1.left_stick_y;
             turn  =  gamepad1.right_stick_x;
 
             // Combine drive and turn for blended motion.
@@ -172,22 +172,23 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
 
             // Move both servos to new position.  Assume servos are mirror image of each other.
             WristOffset = Range.clip(WristOffset, -0.5, 0.5);
-            Wrist.setPosition(MID_SERVO + WristOffset);
+            wrist.setPosition(MID_SERVO + WristOffset);
 
             // Use gamepad buttons to move arm up (Y) and down (A)
             if (gamepad1.dpad_up)
-                leftArm.setPower(ARM_UP_POWER);
+                armMotor.setPower(ARM_UP_POWER);
             else if (gamepad1.dpad_down)
-                leftArm.setPower(ARM_DOWN_POWER);
+                armMotor.setPower(ARM_DOWN_POWER);
             else
-                leftArm.setPower(0.0);
+                armMotor.setPower(0.0);
 
             if (gamepad1.a)
-                Intake.setPower(-1.0);
+                intake.setPower(-1.0);
             else if (gamepad1.b)
-                Intake.setPower(0.5);
-            else
-                Intake.setPower(0.0);
+                intake.setPower(0.5);
+            else if (gamepad1.x) {
+                intake.setPower(0.0);
+            }
 
             // Send telemetry message to signify robot running;
             telemetry.addData("wrist",  "Offset = %.2f", WristOffset);
