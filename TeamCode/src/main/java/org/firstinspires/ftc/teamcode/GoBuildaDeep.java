@@ -215,17 +215,13 @@ public class GoBuildaDeep extends LinearOpMode {
             turns the intake on to the COLLECT mode.*/
 
         //The number correlating to the Wrist Position is an arbitrary one. 0-1 is a range of 270 degrees
-        double Wrist_Position = 0.0;
+        double Wrist_Position = WRIST_CENTERED;
         if (gamepad1.left_bumper) {
-            while (gamepad1.left_bumper) {
-                Wrist_Position -= 0.01;
-                wrist.setPosition(Wrist_Position);
-            }
+                   Wrist_Position -= 0.1;
+                   wrist.setPosition(Wrist_Position);
         } else if (gamepad1.right_bumper) {
-            while (gamepad1.right_bumper) {
-                Wrist_Position += 0.01;
-                wrist.setPosition(Wrist_Position);
-            }
+                    Wrist_Position += 0.1;
+                    wrist.setPosition(Wrist_Position);
         }
 
         //This code probably won't work cause of the code below it.
