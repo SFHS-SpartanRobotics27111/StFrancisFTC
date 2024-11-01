@@ -179,16 +179,16 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
                 armMotor.setPower(ARM_UP_POWER);
             else if (gamepad1.dpad_down)
                 armMotor.setPower(ARM_DOWN_POWER);
-            else
+            else if (gamepad1.y)
                 armMotor.setPower(0.0);
 
             if (gamepad1.a)
                 intake.setPower(-1.0);
             else if (gamepad1.b)
                 intake.setPower(0.5);
-            else if (gamepad1.x) {
+            else if (gamepad1.x)
                 intake.setPower(0.0);
-            }
+
 
             // Send telemetry message to signify robot running;
             telemetry.addData("wrist",  "Offset = %.2f", WristOffset);
