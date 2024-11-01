@@ -171,7 +171,7 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
                 WristOffset -= WRIST_SPEED;
 
             // Move both servos to new position.  Assume servos are mirror image of each other.
-            WristOffset = Range.clip(WristOffset, -0.5, 0.5);
+            WristOffset = Range.clip(WristOffset, -0.8, 0.8);
             wrist.setPosition(MID_SERVO + WristOffset);
 
             // Use gamepad buttons to move arm up (Y) and down (A)
