@@ -1,31 +1,3 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided that
- * the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this list
- * of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright notice, this
- * list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution.
- *
- * Neither the name of FIRST nor the names of its contributors may be used to endorse or
- * promote products derived from this software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
- * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 /*
  * This OpMode is an example driver-controlled (TeleOp) mode for the goBILDA 2024-2025 FTC
  * Into The Deep Starter Robot
@@ -83,72 +55,89 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name = "Tried and True TeleOp", group = "Robot")
+/*
+ * TODO:
+ *  Figure out if we should have encoders for drive motors
+ */
+
+@TeleOp(name = "Main Teleop", group = "Robot")
 public class RobotTeleopPOV_Linear extends LinearOpMode {
 
-    public static final double MID_SERVO = 0.6667;
-    public static final double WRIST_SPEED = 0.02;                 // sets rate to move servo
-    public static final double ARM_UP_POWER = 0.45;
-    public static final double ARM_DOWN_POWER = -0.45;
-    /* Declare OpMode members. */
-    public DcMotor leftDrive = null;
-    public DcMotor rightDrive = null;
-    public DcMotor armMotor = null;
-    public Servo wrist = null;
-    public CRServo intake = null;
-    double WristOffset = 0;
+    // device names
+    private static final String leftDriveName = "left_drive";
+    private static final String rightDriveName = "right_drive";
+    private static final String armName = "left_arm";
+    private static final String wristName = "wrist_pivot";
+    private static final String intakeName = "intake";
 
-    @Override
-    public void runOpMode() {
-        double left;
-        double right;
-        double drive;
-        double turn;
-        double max;
+    private static final double WRIST_MIN = -0.8;
+    private static final double WRIST_MAX = 0.8;
+    private static final double WRIST_MIDDLE = 0.6667;
+    private static final double WRIST_SPEED = 0.02;
+    private static final double ARM_UP = 0.45;
+    private static final double ARM_DOWN = -0.45;
 
-        // Define and Initialize Motors
-        leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-        armMotor = hardwareMap.get(DcMotor.class, "left_arm");
+    private DcMotor leftDrive = null;
+    private DcMotor rightDrive = null;
+    private DcMotor armMotor = null;
+    private Servo wrist = null;
+    private CRServo intake = null;
 
-        // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
-        // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
-        // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
+    private double wristOffset = 0;
+
+    private void setUpDriveMotors() {
+        leftDrive = hardwareMap.get(DcMotor.class, leftDriveName);
+        rightDrive = hardwareMap.get(DcMotor.class, rightDriveName);
+
+        // To drive forward, one motor must be reversed because the axles point in opposite directions
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
 
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
 
-        // Define and initialize ALL installed servos.
-        wrist = hardwareMap.get(Servo.class, "wrist_pivot");
-        intake = hardwareMap.get(CRServo.class, "intake");
-        wrist.setPosition(MID_SERVO);
+    private void setUpArmMotor() {
+        armMotor = hardwareMap.get(DcMotor.class, armName);
+    }
 
+    private void setUpWristServo() {
+        wrist = hardwareMap.get(Servo.class, wristName);
+        wrist.setPosition(WRIST_MIDDLE);
+    }
 
-        // Send telemetry message to signify robot waiting;
-        telemetry.addData(">", "Robot Ready.  Press START.");    //
+    private void setUpIntakeServo() {
+        intake = hardwareMap.get(CRServo.class, intakeName);
+    }
+
+    @Override
+    public void runOpMode() {
+        // set up motors
+        setUpDriveMotors();
+        setUpArmMotor();
+
+        // set up servos
+        setUpWristServo();
+        setUpIntakeServo();
+
+        telemetry.addData(">", "Setup complete. Press start");
         telemetry.update();
 
-        // Wait for the game to start (driver presses START)
         waitForStart();
 
-        // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
-            // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
-            // This way it's also easy to just drive straight, or just turn.
-            drive = -gamepad1.left_stick_y;
-            turn = gamepad1.right_stick_x;
+            // joystick y is negative for forward, so negate it
+            double drive = -gamepad1.left_stick_y;
+            double turn = gamepad1.right_stick_x;
 
             // Combine drive and turn for blended motion.
-            left = drive + turn;
-            right = drive - turn;
+            double left = drive + turn;
+            double right = drive - turn;
 
             // Normalize the values so neither exceed +/- 1.0
-            max = Math.max(Math.abs(left), Math.abs(right));
+            double max = Math.max(Math.abs(left), Math.abs(right));
             if (max > 1.0) {
                 left /= max;
                 right /= max;
@@ -159,23 +148,25 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
             rightDrive.setPower(right);
 
             // Use gamepad left & right Bumpers to open and close the claw
-            if (gamepad1.right_bumper)
-                WristOffset += WRIST_SPEED;
-            else if (gamepad1.left_bumper)
-                WristOffset -= WRIST_SPEED;
+            if (gamepad1.right_bumper) {
+                wristOffset += WRIST_SPEED;
+            }
+            else if (gamepad1.left_bumper) {
+                wristOffset -= WRIST_SPEED;
+            }
 
-            // Move both servos to new position.  Assume servos are mirror image of each other.
-            WristOffset = Range.clip(WristOffset, -0.8, 0.8);
-            wrist.setPosition(MID_SERVO + WristOffset);
+            wristOffset = Range.clip(wristOffset, WRIST_MIN, WRIST_MAX);
+            wrist.setPosition(WRIST_MIDDLE + wristOffset);
 
-            // Use gamepad buttons to move arm up (Y) and down (A)
             if (gamepad1.dpad_up)
-                armMotor.setPower(ARM_UP_POWER);
+                armMotor.setPower(ARM_UP);
             else if (gamepad1.dpad_down)
-                armMotor.setPower(ARM_DOWN_POWER);
+                armMotor.setPower(ARM_DOWN);
             else if (gamepad1.y)
                 armMotor.setPower(0.0);
 
+            // need to document which one is in and which one is out
+            // also extract magic numbers into final members
             if (gamepad1.a)
                 intake.setPower(-1.0);
             else if (gamepad1.b)
@@ -185,7 +176,7 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
 
 
             // Send telemetry message to signify robot running;
-            telemetry.addData("wrist", "Offset = %.2f", WristOffset);
+            telemetry.addData("wrist", "Offset = %.2f", wristOffset);
             telemetry.addData("left", "%.2f", left);
             telemetry.addData("right", "%.2f", right);
             telemetry.update();
