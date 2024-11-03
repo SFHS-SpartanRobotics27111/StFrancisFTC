@@ -61,7 +61,6 @@
  */
 
 
-
 //Need to test tomorrow for wrist movement and intake
 package org.firstinspires.ftc.teamcode;
 
@@ -69,7 +68,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
@@ -85,23 +83,20 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Tried and True TeleOp", group="Robot")
-
+@TeleOp(name = "Tried and True TeleOp", group = "Robot")
 public class RobotTeleopPOV_Linear extends LinearOpMode {
 
+    public static final double MID_SERVO = 0.6667;
+    public static final double WRIST_SPEED = 0.02;                 // sets rate to move servo
+    public static final double ARM_UP_POWER = 0.45;
+    public static final double ARM_DOWN_POWER = -0.45;
     /* Declare OpMode members. */
-    public DcMotor  leftDrive   = null;
-    public DcMotor  rightDrive  = null;
+    public DcMotor leftDrive = null;
+    public DcMotor rightDrive = null;
     public DcMotor armMotor = null;
     public Servo wrist = null;
     public CRServo intake = null;
-
     double WristOffset = 0;
-
-    public static final double MID_SERVO   =  0.6667 ;
-    public static final double WRIST_SPEED  = 0.02 ;                 // sets rate to move servo
-    public static final double ARM_UP_POWER    =  0.45 ;
-    public static final double ARM_DOWN_POWER  = -0.45 ;
 
     @Override
     public void runOpMode() {
@@ -112,7 +107,7 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
         double max;
 
         // Define and Initialize Motors
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
+        leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
         armMotor = hardwareMap.get(DcMotor.class, "left_arm");
 
@@ -145,17 +140,16 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
             // Run wheels in POV mode (note: The joystick goes negative when pushed forward, so negate it)
             // In this mode the Left stick moves the robot fwd and back, the Right stick turns left and right.
             // This way it's also easy to just drive straight, or just turn.
-            drive =  -gamepad1.left_stick_y;
-            turn  =  gamepad1.right_stick_x;
+            drive = -gamepad1.left_stick_y;
+            turn = gamepad1.right_stick_x;
 
             // Combine drive and turn for blended motion.
-            left  = drive + turn;
+            left = drive + turn;
             right = drive - turn;
 
             // Normalize the values so neither exceed +/- 1.0
             max = Math.max(Math.abs(left), Math.abs(right));
-            if (max > 1.0)
-            {
+            if (max > 1.0) {
                 left /= max;
                 right /= max;
             }
@@ -191,8 +185,8 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
 
 
             // Send telemetry message to signify robot running;
-            telemetry.addData("wrist",  "Offset = %.2f", WristOffset);
-            telemetry.addData("left",  "%.2f", left);
+            telemetry.addData("wrist", "Offset = %.2f", WristOffset);
+            telemetry.addData("left", "%.2f", left);
             telemetry.addData("right", "%.2f", right);
             telemetry.update();
 

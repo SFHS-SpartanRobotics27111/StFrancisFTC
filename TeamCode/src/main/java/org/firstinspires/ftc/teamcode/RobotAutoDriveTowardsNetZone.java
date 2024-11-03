@@ -30,7 +30,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -54,25 +53,21 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Robot: Auto Drive Towards Net Zone", group="Robot")
-//@Disabled
+@Autonomous(name = "Robot: Auto Drive Towards Net Zone", group = "Robot")
 public class RobotAutoDriveTowardsNetZone extends LinearOpMode {
 
+    static final double FORWARD_SPEED = 0.6;
+    static final double TURN_SPEED = 0.5;
     /* Declare OpMode members. */
-    private DcMotor         leftDrive   = null;
-    private DcMotor         rightDrive  = null;
-
-    private ElapsedTime     runtime = new ElapsedTime();
-
-
-    static final double     FORWARD_SPEED = 0.6;
-    static final double     TURN_SPEED    = 0.5;
+    private DcMotor leftDrive = null;
+    private DcMotor rightDrive = null;
+    private final ElapsedTime runtime = new ElapsedTime();
 
     @Override
     public void runOpMode() {
 
         // Initialize the drive system variables.
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
+        leftDrive = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
