@@ -56,7 +56,6 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
 
     private void setUpWristServo() {
         wrist = hardwareMap.get(Servo.class, wristName);
-        wrist.setPosition(WRIST_MIDDLE);
     }
 
     private void setUpIntakeServo() {
@@ -149,3 +148,5 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
         }
     }
 }
+
+
