@@ -51,11 +51,11 @@ public class Arm {
 
     public void moveArmWithEncoder(boolean up, boolean down) {
         if (up) {
-            armPosition += 1;
+            armPosition += 1 * ARM_TICKS_PER_DEGREE;
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
             telemetry.update();
         } else if (down) {
-            armPosition -= 1;
+            armPosition -= 1 * ARM_TICKS_PER_DEGREE;
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
             telemetry.update();
         }
