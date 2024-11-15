@@ -36,7 +36,7 @@ public class Arm {
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public void moveArm(boolean up, boolean down, boolean stop) {
+    /*public void moveArm(boolean up, boolean down, boolean stop) {
         if (up) {
             arm.setPower(ARM_UP);
             telemetry.addData("Arm", "Moving up");
@@ -47,7 +47,7 @@ public class Arm {
             arm.setPower(0.0);
             telemetry.addData("Arm", "Stopping");
         }
-    }
+    }*/
 
     public void moveArmWithEncoder(boolean up, boolean down) {
         if (up) {
@@ -66,3 +66,10 @@ public class Arm {
         }
     }
 }
+/* Positions to add:
+grabbing sample
+getting into the submersible
+folded in
+scoring sample
+scoring specimen
+ */
