@@ -4,16 +4,16 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.hardware.Arm;
-import org.firstinspires.ftc.teamcode.hardware.Drive;
 import org.firstinspires.ftc.teamcode.hardware.Intake;
+import org.firstinspires.ftc.teamcode.hardware.OmniDrive;
 import org.firstinspires.ftc.teamcode.hardware.Wrist;
 
-@TeleOp(name = "Main Teleop", group = "Robot")
+@TeleOp(name = "Omni TeleOp", group = "Robot")
 public class RobotTeleopPOV_Linear extends LinearOpMode {
     @Override
     public void runOpMode() {
         // set up motors
-        Drive drive = new Drive(hardwareMap, telemetry);
+        OmniDrive drive = new OmniDrive(hardwareMap, telemetry);
         Arm arm = new Arm(hardwareMap, telemetry);
 
         // set up servos

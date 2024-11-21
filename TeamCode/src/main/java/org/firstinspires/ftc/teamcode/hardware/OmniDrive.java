@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -10,23 +11,28 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  *  Figure out if we should have encoders for drive motors
  */
 
-public class Drive {
-    private static final String leftDriveName = "left_drive";
-    private static final String rightDriveName = "right_drive";
-
-    public DcMotor driveRight;
-    public DcMotor driveLeft;
+public class OmniDrive {
+    // Declare OpMode members for each of the 4 motors.
+    private ElapsedTime runtime = new ElapsedTime();
+    private DcMotor leftFrontDrive = null;
+    private DcMotor leftBackDrive = null;
+    private DcMotor rightFrontDrive = null;
+    private DcMotor rightBackDrive = null;
 
     private final Telemetry telemetry;
 
-    public Drive(HardwareMap hardwareMap, Telemetry telemetry1) {
+    public OmniDrive(HardwareMap hardwareMap, Telemetry telemetry1) {
         telemetry = telemetry1;
-        driveLeft = hardwareMap.get(DcMotor.class, leftDriveName);
-        driveRight = hardwareMap.get(DcMotor.class, rightDriveName);
+        leftFrontDrive  = hardwareMap.get(DcMotor.class, "left_front_drive");
+        leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
+        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
 
         // To drive forward, one motor must be reversed because the axles point in opposite directions
-        driveLeft.setDirection(DcMotor.Direction.FORWARD);
-        driveRight.setDirection(DcMotor.Direction.REVERSE);
+        leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
+        rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
 
         // If there are encoders connected, switch to RUN_USING_ENCODER mode for greater accuracy
         // leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -34,21 +40,59 @@ public class Drive {
     }
 
     public void driveFirstPerson(double drive, double turn) {
-        // Combine drive and turn for blended motion.
-        double left = drive + turn;
-        double right = drive - turn;
+        double max;
 
-        // Normalize the values so neither exceed +/- 1.0
-        double max = Math.max(Math.abs(left), Math.abs(right));
+        // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
+        double axial   =  drive;  // Note: pushing stick forward gives negative value
+        double lateral =  -drive;
+        double yaw     =  turn;
+
+        // Combine the joystick requests for each axis-motion to determine each wheel's power.
+        // Set up a variable for each drive wheel to save the power level for telemetry.
+        double leftFrontPower  = axial + lateral + yaw;
+        double rightFrontPower = axial - lateral - yaw;
+        double leftBackPower   = axial - lateral + yaw;
+        double rightBackPower  = axial + lateral - yaw;
+
+        // Normalize the values so no wheel power exceeds 100%
+        // This ensures that the robot maintains the desired motion.
+        max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
+        max = Math.max(max, Math.abs(leftBackPower));
+        max = Math.max(max, Math.abs(rightBackPower));
+
         if (max > 1.0) {
-            left /= max;
-            right /= max;
+            leftFrontPower  /= max;
+            rightFrontPower /= max;
+            leftBackPower   /= max;
+            rightBackPower  /= max;
         }
 
-        driveLeft.setPower(left);
-        driveRight.setPower(right);
+        // This is test code:
+        //
+        // Uncomment the following code to test your motor directions.
+        // Each button should make the corresponding motor run FORWARD.
+        //   1) First get all the motors to take to correct positions on the robot
+        //      by adjusting your Robot Configuration if necessary.
+        //   2) Then make sure they run in the correct direction by modifying the
+        //      the setDirection() calls above.
+        // Once the correct motors move in the correct direction re-comment this code.
 
-        telemetry.addData("left", "%.2f", left);
-        telemetry.addData("right", "%.2f", right);
+            /*
+            leftFrontPower  = gamepad1.x ? 1.0 : 0.0;  // X gamepad
+            leftBackPower   = gamepad1.a ? 1.0 : 0.0;  // A gamepad
+            rightFrontPower = gamepad1.y ? 1.0 : 0.0;  // Y gamepad
+            rightBackPower  = gamepad1.b ? 1.0 : 0.0;  // B gamepad
+            */
+
+        // Send calculated power to wheels
+        leftFrontDrive.setPower(leftFrontPower);
+        rightFrontDrive.setPower(rightFrontPower);
+        leftBackDrive.setPower(leftBackPower);
+        rightBackDrive.setPower(rightBackPower);
+
+        // Show the elapsed game time and wheel power.
+        telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
+        telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
     }
 }
