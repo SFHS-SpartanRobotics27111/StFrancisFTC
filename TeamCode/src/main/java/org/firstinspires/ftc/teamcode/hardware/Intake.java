@@ -18,7 +18,7 @@ public class Intake {
         intake = hardwareMap.get(CRServo.class, intakeName);
     }
 
-    public void moveIntake(boolean in, boolean out, boolean stop) {
+    public void moveIntake(boolean in, boolean out) {
         // need to document which one is in and which one is out
         // also extract magic numbers into final members
         if (out) {
@@ -27,7 +27,7 @@ public class Intake {
         } else if (in) {
             intake.setPower(0.5);
             telemetry.addData("Intake", "0.5");
-        } else if (stop) {
+        } else {
             intake.setPower(0.0);
             telemetry.addData("Intake", "0");
         }

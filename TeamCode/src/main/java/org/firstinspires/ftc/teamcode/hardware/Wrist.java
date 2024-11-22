@@ -24,7 +24,6 @@ public class Wrist {
         telemetry = telemetry1;
 
         wrist = hardwareMap.get(Servo.class, wristName);
-        wrist.setPosition(WRIST_MIDDLE);
     }
 
     public void moveWrist(boolean right, boolean left) {
