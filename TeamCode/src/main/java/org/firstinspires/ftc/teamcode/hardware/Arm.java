@@ -38,14 +38,14 @@ public class Arm {
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public void moveArm(boolean up, boolean down, boolean stop) {
+    public void moveArm(boolean up, boolean down) {
         if (up) {
             arm.setPower(ARM_UP);
             telemetry.addData("Arm", "Moving up");
         } else if (down) {
             arm.setPower(ARM_DOWN);
             telemetry.addData("Arm", "Moving down");
-        } else if (stop) {
+        } else {
             arm.setPower(0.0);
             telemetry.addData("Arm", "Stopping");
         }
@@ -74,6 +74,11 @@ public class Arm {
             armPosition = ARM_SCORE_SAMPLE_IN_LOW;
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
         }
+
+        arm.setTargetPosition((int) (armPosition));
+
+        ((DcMotorEx) arm).setVelocity(2100);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         if (((DcMotorEx) arm).isOverCurrent()) {
             telemetry.addLine("MOTOR EXCEEDED CURRENT LIMIT!!");
