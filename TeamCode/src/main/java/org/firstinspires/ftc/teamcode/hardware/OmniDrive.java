@@ -14,20 +14,24 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class OmniDrive {
     // Declare OpMode members for each of the 4 motors.
-    private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftFrontDrive = null;
-    private DcMotor leftBackDrive = null;
-    private DcMotor rightFrontDrive = null;
-    private DcMotor rightBackDrive = null;
+    private final ElapsedTime runtime = new ElapsedTime();
+    private final String LEFTFRONTDRIVE = "left_front_drive";
+    private final String LEFTBACKDRIVE = "left_back_drive";
+    private final String RIGHTFRONTDRIVE = "right_front_drive";
+    private final String RIGHTBACKDRIVE = "right_back_drive";
+    public DcMotor leftFrontDrive;
+    public DcMotor leftBackDrive;
+    public DcMotor rightFrontDrive;
+    public DcMotor rightBackDrive;
 
     private final Telemetry telemetry;
 
     public OmniDrive(HardwareMap hardwareMap, Telemetry telemetry1) {
         telemetry = telemetry1;
-        leftFrontDrive  = hardwareMap.get(DcMotor.class, "left_front_drive");
-        leftBackDrive  = hardwareMap.get(DcMotor.class, "left_back_drive");
-        rightFrontDrive = hardwareMap.get(DcMotor.class, "right_front_drive");
-        rightBackDrive = hardwareMap.get(DcMotor.class, "right_back_drive");
+        leftFrontDrive  = hardwareMap.get(DcMotor.class, LEFTFRONTDRIVE);
+        leftBackDrive  = hardwareMap.get(DcMotor.class, LEFTBACKDRIVE);
+        rightFrontDrive = hardwareMap.get(DcMotor.class, RIGHTFRONTDRIVE);
+        rightBackDrive = hardwareMap.get(DcMotor.class, RIGHTBACKDRIVE);
 
         // To drive forward, one motor must be reversed because the axles point in opposite directions
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -44,16 +48,13 @@ public class OmniDrive {
         double max;
 
         // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-        double axial   =  driveY;  // Note: pushing stick forward gives negative value
-        double lateral =  driveX; //X axis of Left stick
-        double yaw     =  turn;
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
-        double leftFrontPower  = axial + lateral + yaw;
-        double rightFrontPower = axial - lateral - yaw;
-        double leftBackPower   = axial - lateral + yaw;
-        double rightBackPower  = axial + lateral - yaw;
+        double leftFrontPower  = driveY + driveX + turn;
+        double rightFrontPower = driveY - driveX - turn;
+        double leftBackPower   = driveY - driveX + turn;
+        double rightBackPower  = driveY + driveX - turn;
 
         // Normalize the values so no wheel power exceeds 100%
         // This ensures that the robot maintains the desired motion.
@@ -68,23 +69,6 @@ public class OmniDrive {
             rightBackPower  /= max;
         }
 
-        // This is test code:
-        //
-        // Uncomment the following code to test your motor directions.
-        // Each button should make the corresponding motor run FORWARD.
-        //   1) First get all the motors to take to correct positions on the robot
-        //      by adjusting your Robot Configuration if necessary.
-        //   2) Then make sure they run in the correct direction by modifying the
-        //      the setDirection() calls above.
-        // Once the correct motors move in the correct direction re-comment this code.
-
-            /*
-            leftFrontPower  = gamepad1.x ? 1.0 : 0.0;  // X gamepad
-            leftBackPower   = gamepad1.a ? 1.0 : 0.0;  // A gamepad
-            rightFrontPower = gamepad1.y ? 1.0 : 0.0;  // Y gamepad
-            rightBackPower  = gamepad1.b ? 1.0 : 0.0;  // B gamepad
-            */
-
         // Send calculated power to wheels
         leftFrontDrive.setPower(leftFrontPower);
         rightFrontDrive.setPower(rightFrontPower);
@@ -92,7 +76,7 @@ public class OmniDrive {
         rightBackDrive.setPower(rightBackPower);
 
         // Show the elapsed game time and wheel power.
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.addData("Status", "Run Time: " + runtime);
         telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
         telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
     }
