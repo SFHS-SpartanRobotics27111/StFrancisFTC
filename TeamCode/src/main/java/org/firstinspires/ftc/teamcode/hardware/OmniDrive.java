@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -39,12 +40,12 @@ public class OmniDrive {
         // rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void driveFirstPerson(double drive, double turn) {
+    public void driveFirstPerson(double driveY,double driveX, double turn) {
         double max;
 
         // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-        double axial   =  drive;  // Note: pushing stick forward gives negative value
-        double lateral =  -drive;
+        double axial   =  driveY;  // Note: pushing stick forward gives negative value
+        double lateral =  driveX; //X axis of Left stick
         double yaw     =  turn;
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
