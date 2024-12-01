@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.hardware.Intake;
 import org.firstinspires.ftc.teamcode.hardware.OmniDrive;
 import org.firstinspires.ftc.teamcode.hardware.Wrist;
 
-@TeleOp(name = "Omni TeleOp", group = "Robot")
+@TeleOp(name = "Robot Centric Omni TeleOp", group = "Robot")
 public class RobotTeleopPOV_Linear extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -28,8 +28,7 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
         while (opModeIsActive()) {
             // joystick y is negative for forward, so negate it
             drive.driveFirstPerson(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-            //arm.moveArm(gamepad1.dpad_up, gamepad1.dpad_down);
-            arm.moveArmWithEncoder(gamepad2.a, gamepad2.b, gamepad2.x, gamepad2.y, gamepad2.dpad_up, gamepad2.dpad_down, gamepad2.dpad_left);
+            arm.moveArmWithEncoder(gamepad2.a, gamepad2.b, gamepad2.x, gamepad2.y, gamepad2.dpad_up, gamepad2.dpad_down);
             wrist.moveWrist(gamepad1.right_bumper, gamepad1.left_bumper);
             intake.moveIntake(gamepad1.a, gamepad1.b);
 
