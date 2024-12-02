@@ -56,7 +56,7 @@
  @Autonomous(name = "Robot: Auto Drive Towards Net Zone then into Observation Zone: Mecanum Wheel", group = "Robot")
  public class RobotAutoDriveTowardsNetzoneThenIntoObservationZone extends LinearOpMode {
  
-     static final double FORWARD_SPEED = 0.6;
+     static final double FORWARD_SPEED = 0.9;
      static final double TURN_SPEED = 0.5;
      /* Declare OpMode members. */
      private DcMotor leftFront = null;
@@ -78,7 +78,7 @@
          // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
          // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
          leftFront.setDirection(DcMotor.Direction.REVERSE);
-         rightFront.setDirection(DcMotor.Direction.REVERSE);
+         rightFront.setDirection(DcMotor.Direction.FORWARD);
          leftBack.setDirection(DcMotor.Direction.REVERSE);
          rightBack.setDirection(DcMotor.Direction.FORWARD);
  
@@ -91,19 +91,19 @@
  
          // Step through each leg of the path, ensuring that the OpMode has not been stopped along the way.
  
-         // Step 1:  Drive forward for 3 seconds
+         // Step 1:  Drive forward for 3 seconds -- NOT FAR ENOUGH FIX IT
          leftFront.setPower(FORWARD_SPEED);
-         leftBack.setPower(FORWARD_SPEED);
+         //leftBack.setPower(FORWARD_SPEED);
          rightFront.setPower(FORWARD_SPEED);
-         rightBack.setPower(FORWARD_SPEED);
+         //rightBack.setPower(FORWARD_SPEED);
          runtime.reset();
          while (opModeIsActive() && (runtime.seconds() < 0.5)) { // change this int to change how long you drive forward for TODO:use odometry instead of time
              telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
              telemetry.update();
          }
  
-         // Step 2:  Spin right for 1.3 seconds --brokenish? turns but unreliable - uncommet to try it out 
-         leftFront.setPower(TURN_SPEED);
+         // Step 2:  Spin right for 1.3 seconds --brokenish? turns but unreliable
+        /* leftFront.setPower(TURN_SPEED);
          leftBack.setPower(-TURN_SPEED);
          rightFront.setPower(TURN_SPEED);
          rightBack.setPower(-TURN_SPEED);
@@ -113,7 +113,7 @@
               telemetry.update();
           }*/
  
-         // Step 3:  Drive Backward for 2 Seconds - if you set it backwards it go backwards 
+         // Step 3:  Drive Backward for 2 Seconds - if you set it backwards it go backwards -- Too farrrr FIX IT
          leftFront.setPower(-FORWARD_SPEED);
          leftBack.setPower(-FORWARD_SPEED);
          rightFront.setPower(-FORWARD_SPEED);
@@ -126,8 +126,10 @@
          }
  
          // Step 4:  Stop
-         leftDrive.setPower(0);
-         rightDrive.setPower(0);
+         leftFront.setPower(0);
+         leftBack.setPower(0);
+         rightFront.setPower(0);
+         rightBack.setPower(0);
  
          telemetry.addData("Path", "Complete");
          telemetry.update();
