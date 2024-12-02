@@ -8,8 +8,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Wrist {
     private static final String wristName = "wrist_pivot";
 
-    private static final double WRIST_MIDDLE = 0.6667;
-    private static final double WRIST_RIGHT = 0.8;
+    private static final double WRIST_MIDDLE = 0.69;
+    private static final double WRIST_RIGHT = 1.2;
 
     public Servo wrist;
     private final Telemetry telemetry;
