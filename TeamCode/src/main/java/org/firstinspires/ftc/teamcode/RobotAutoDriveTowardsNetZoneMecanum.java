@@ -51,19 +51,19 @@ public class RobotAutoDriveTowardsNetZoneMecanum extends LinearOpMode {
         leftFrontDrive.setPower(leftFrontPower);
         rightFrontDrive.setPower(rightFrontPower);
         timer.reset();
-        while (opModeIsActive() && (timer.seconds() < 0.5)) {
+        while (opModeIsActive() && (timer.seconds() < 1.0)) {
             telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", timer.seconds());
             telemetry.update();
         }
 
         // Drive backward
-        leftBackDrive.setPower(rightBackPower);
+        /*leftBackDrive.setPower(rightBackPower);
         rightBackDrive.setPower(rightBackPower);
         timer.reset();
         while (opModeIsActive() && (timer.seconds() < 1.0)) {
             telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", timer.seconds());
             telemetry.update();
-        }
+        }*/
 
         // Stop
         leftBackDrive.setPower(0);

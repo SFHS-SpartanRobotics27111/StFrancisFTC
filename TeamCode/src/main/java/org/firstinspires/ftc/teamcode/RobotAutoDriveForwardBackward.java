@@ -53,7 +53,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Robot: Auto Drive to net zone into observation zone", group="Robot")
+@Autonomous(name=" DONT USE Robot: Auto Drive to net zone into observation zone", group="Robot")
 //@Disabled
 public class RobotAutoDriveForwardBackward extends LinearOpMode {
 
