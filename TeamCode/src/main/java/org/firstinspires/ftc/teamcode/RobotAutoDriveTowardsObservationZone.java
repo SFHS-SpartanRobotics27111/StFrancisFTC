@@ -97,7 +97,7 @@
          rightFront.setPower(FORWARD_SPEED);
          //rightBack.setPower(FORWARD_SPEED);
          runtime.reset();*/
-         while (opModeIsActive() && (runtime.seconds() < 0.85)) { // change this int to change how long you drive forward for TODO:use odometry instead of time
+         while (opModeIsActive() && (runtime.seconds() < 0.28)) { // change this int to change how long you drive forward for TODO:use odometry instead of time
              telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
              telemetry.update();
          }
@@ -114,13 +114,13 @@
           }*/
  
          // Step 3:  Drive Backward for 2 Seconds - if you set it backwards it go backwards -- Too farrrr FIX IT
-         leftFront.setPower(-FORWARD_SPEED);
-         leftBack.setPower(-FORWARD_SPEED);
-         rightFront.setPower(-FORWARD_SPEED);
-         rightBack.setPower(-FORWARD_SPEED);
+         leftFront.setPower(FORWARD_SPEED);
+         leftBack.setPower(FORWARD_SPEED);
+         rightFront.setPower(FORWARD_SPEED);
+         rightBack.setPower(FORWARD_SPEED);
          
          runtime.reset();
-         while (opModeIsActive() && (runtime.seconds() < 1.0)) {
+         while (opModeIsActive() && (runtime.seconds() < 0.28)) {
              telemetry.addData("Path", "Leg 3: %4.1f S Elapsed", runtime.seconds());
              telemetry.update();
          }

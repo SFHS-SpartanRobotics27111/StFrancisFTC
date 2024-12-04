@@ -93,15 +93,15 @@
  
          // Step 1:  Drive forward for 3 seconds -- NOT FAR ENOUGH FIX IT
          leftFront.setPower(FORWARD_SPEED);
-         //leftBack.setPower(FORWARD_SPEED);
+         leftBack.setPower(FORWARD_SPEED);
          rightFront.setPower(FORWARD_SPEED);
-         //rightBack.setPower(FORWARD_SPEED);
+         rightBack.setPower(FORWARD_SPEED);
+
          runtime.reset();
-         while (opModeIsActive() && (runtime.seconds() < 0.85)) { // change this int to change how long you drive forward for TODO:use odometry instead of time
-             telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
+         while (opModeIsActive() && (runtime.seconds() < 0.28)) {
+             telemetry.addData("Path", "Leg 3: %4.1f S Elapsed", runtime.seconds());
              telemetry.update();
          }
- 
          // Step 2:  Spin right for 1.3 seconds --brokenish? turns but unreliable
         /* leftFront.setPower(TURN_SPEED);
          leftBack.setPower(-TURN_SPEED);
@@ -120,7 +120,7 @@
          rightBack.setPower(-FORWARD_SPEED);
          
          runtime.reset();
-         while (opModeIsActive() && (runtime.seconds() < 1.45)) {
+         while (opModeIsActive() && (runtime.seconds() < 1.0)) {
              telemetry.addData("Path", "Leg 3: %4.1f S Elapsed", runtime.seconds());
              telemetry.update();
          }
