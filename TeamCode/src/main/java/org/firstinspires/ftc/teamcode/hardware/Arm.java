@@ -20,9 +20,11 @@ public class Arm {
     final double ARM_SCORE_SPECIMEN = 160 * ARM_TICKS_PER_DEGREE;
     final double ARM_ATTACH_HANGING_HOOK = 120 * ARM_TICKS_PER_DEGREE;
     final double ARM_WINCH_ROBOT = 15 * ARM_TICKS_PER_DEGREE;
+    final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
     private final Telemetry telemetry;
     public DcMotor arm;
     double armPosition = (int) ARM_COLLAPSED_IN;
+    double armPositionFudgeFactor;
 
     public Arm(HardwareMap hardwareMap, Telemetry telemetry1) {
         telemetry = telemetry1;
@@ -35,7 +37,7 @@ public class Arm {
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public void moveArmWithEncoder(boolean a, boolean b, boolean x, boolean y, boolean up, boolean down) {
+    public void moveArmWithEncoder(boolean a, boolean b, boolean x, boolean y, boolean up, boolean down, double rt, double lt) {
         if (a) {
             armPosition = ARM_COLLECT;
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
@@ -56,7 +58,9 @@ public class Arm {
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
         }
 
-        arm.setTargetPosition((int) (armPosition));
+        armPositionFudgeFactor = FUDGE_FACTOR * (rt + (-lt));
+
+        arm.setTargetPosition((int) (armPosition + armPositionFudgeFactor));
 
         ((DcMotorEx) arm).setVelocity(2100);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);

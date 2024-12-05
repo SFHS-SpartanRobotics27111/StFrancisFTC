@@ -9,7 +9,7 @@ public class Wrist {
     private static final String wristName = "wrist_pivot";
 
     private static final double WRIST_MIDDLE = 0.69;
-    private static final double WRIST_RIGHT = 1.2;
+    private static final double WRIST_RIGHT = 1.25;
 
     public Servo wrist;
     private final Telemetry telemetry;

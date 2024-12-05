@@ -28,7 +28,7 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
         while (opModeIsActive()) {
             // joystick y is negative for forward, so negate it
             drive.driveFirstPerson(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-            arm.moveArmWithEncoder(gamepad2.a, gamepad2.b, gamepad2.x, gamepad2.y, gamepad2.dpad_up, gamepad2.dpad_down);
+            arm.moveArmWithEncoder(gamepad2.a, gamepad2.b, gamepad2.x, gamepad2.y, gamepad2.dpad_up, gamepad2.dpad_down, gamepad2.right_trigger, gamepad2.left_trigger);
             wrist.moveWrist(gamepad1.right_bumper, gamepad1.left_bumper);
             intake.moveIntake(gamepad1.a, gamepad1.b);
 
