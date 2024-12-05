@@ -112,6 +112,17 @@
               telemetry.addData("Path", "Leg 2: %4.1f S Elapsed", runtime.seconds());
               telemetry.update();
           }*/
+         //stop for a wee bit
+         leftFront.setPower(0);
+         leftBack.setPower(0);
+         rightFront.setPower(0);
+         rightBack.setPower(0);
+         runtime.reset();
+
+         while (opModeIsActive() && (runtime.seconds() < 0.3)) {
+             telemetry.addData("Path", "Leg 3: %4.1f S Elapsed", runtime.seconds());
+             telemetry.update();
+         }
  
          // Step 3:  Drive Backward for 2 Seconds - if you set it backwards it go backwards -- Too farrrr FIX IT
          leftFront.setPower(-FORWARD_SPEED);
@@ -120,7 +131,7 @@
          rightBack.setPower(-FORWARD_SPEED);
          
          runtime.reset();
-         while (opModeIsActive() && (runtime.seconds() < 1.0)) {
+         while (opModeIsActive() && (runtime.seconds() < 1.28)) {
              telemetry.addData("Path", "Leg 3: %4.1f S Elapsed", runtime.seconds());
              telemetry.update();
          }
