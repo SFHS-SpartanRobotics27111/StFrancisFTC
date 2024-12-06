@@ -21,10 +21,10 @@ public class Intake {
     public void moveIntake(boolean in, boolean out) {
         // need to document which one is in and which one is out
         // also extract magic numbers into final members
-        if (out) {
+        if (in) {
             intake.setPower(-1.0);
             telemetry.addData("Intake", "-1.0");
-        } else if (in) {
+        } else if (out) {
             intake.setPower(0.5);
             telemetry.addData("Intake", "0.5");
         } else {
