@@ -54,7 +54,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @Autonomous(name = "DELAY 25: Auto Drive Towards Net Zone then into Observation Zone: Mecanum Wheel", group = "Robot")
-public class NetzoneintoObservation extends LinearOpMode {
+public class NetzoneintoObservationDelay extends LinearOpMode {
 
     static final double FORWARD_SPEED = 0.9;
     static final double TURN_SPEED = 0.5;
