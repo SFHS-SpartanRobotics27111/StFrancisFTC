@@ -32,9 +32,9 @@ public class Arm {
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ((DcMotorEx) arm).setCurrentAlert(5, CurrentUnit.AMPS);
 
-        arm.setTargetPosition(0);
+        /*arm.setTargetPosition(0);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
     }
 
     public void moveArmWithEncoder(boolean a, boolean b, boolean x, boolean y, boolean up, boolean down, double rt, double lt) {
@@ -61,6 +61,7 @@ public class Arm {
         armPositionFudgeFactor = FUDGE_FACTOR * (rt + (-lt));
 
         arm.setTargetPosition((int) (armPosition + armPositionFudgeFactor));
+
 
         ((DcMotorEx) arm).setVelocity(2100);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
