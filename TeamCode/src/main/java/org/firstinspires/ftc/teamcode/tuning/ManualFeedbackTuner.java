@@ -1,61 +1,63 @@
 package org.firstinspires.ftc.teamcode.tuning;
 
-import com.amarcolini.joos.command.CommandOpMode;
-import com.amarcolini.joos.command.SequentialCommand;
-import com.amarcolini.joos.command.WaitCommand;
-import com.amarcolini.joos.dashboard.JoosConfig;
-import com.amarcolini.joos.geometry.Angle;
-import com.amarcolini.joos.geometry.Pose2d;
-import com.amarcolini.joos.hardware.drive.DrivePathFollower;
-import com.amarcolini.joos.hardware.drive.DriveTrajectoryFollower;
-import com.amarcolini.joos.path.Path;
-import com.amarcolini.joos.path.PathBuilder;
-import com.amarcolini.joos.trajectory.Trajectory;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.SampleRobot;
+import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ftc.Actions;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-@TeleOp
-@JoosConfig
-public class ManualFeedbackTuner extends CommandOpMode {
-    @Register
-    private SampleRobot robot;
-    public static double distance = 48.0;
+import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.TankDrive;
+import org.firstinspires.ftc.teamcode.ThreeDeadWheelLocalizer;
+import org.firstinspires.ftc.teamcode.TwoDeadWheelLocalizer;
+
+public final class ManualFeedbackTuner extends LinearOpMode {
+    public static double DISTANCE = 64;
 
     @Override
-    public void preInit() {
-        robot.drive.getLocalizer().setPoseEstimate(new Pose2d());
-        if (robot.drive instanceof DriveTrajectoryFollower) {
-            DriveTrajectoryFollower follower = (DriveTrajectoryFollower) robot.drive;
-            Trajectory forwardTrajectory = follower.trajectoryBuilder(new Pose2d())
-                    .lineToSplineHeading(new Pose2d(distance, 0.0, Angle.deg(180)))
-                    .build();
-            Trajectory backwardTrajectory = follower.trajectoryBuilder(forwardTrajectory.end())
-                    .lineToSplineHeading(new Pose2d())
-                    .build();
+    public void runOpMode() throws InterruptedException {
+        if (TuningOpModes.DRIVE_CLASS.equals(MecanumDrive.class)) {
+            MecanumDrive drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
+            
+            if (drive.localizer instanceof TwoDeadWheelLocalizer) {
+                if (TwoDeadWheelLocalizer.PARAMS.perpXTicks == 0 && TwoDeadWheelLocalizer.PARAMS.parYTicks == 0) {
+                    throw new RuntimeException("Odometry wheel locations not set! Run AngularRampLogger to tune them.");
+                }
+            } else if (drive.localizer instanceof ThreeDeadWheelLocalizer) {
+                if (ThreeDeadWheelLocalizer.PARAMS.perpXTicks == 0 && ThreeDeadWheelLocalizer.PARAMS.par0YTicks == 0 && ThreeDeadWheelLocalizer.PARAMS.par1YTicks == 1) {
+                    throw new RuntimeException("Odometry wheel locations not set! Run AngularRampLogger to tune them.");
+                }
+            }
+            waitForStart();
 
-            new SequentialCommand(
-                    false,
-                    follower.followTrajectory(forwardTrajectory),
-                    new WaitCommand(0.5),
-                    follower.followTrajectory(backwardTrajectory),
-                    new WaitCommand(0.5)
-            ).repeatForever().schedule();
-        } else if (robot.drive instanceof DrivePathFollower) {
-            DrivePathFollower follower = (DrivePathFollower) robot.drive;
-            Path forwardPath = new PathBuilder(new Pose2d())
-                    .lineToSplineHeading(new Pose2d(distance, 0.0, Angle.deg(180)))
-                    .build();
-            Path backwardPath = new PathBuilder(forwardPath.end())
-                    .lineToSplineHeading(new Pose2d())
-                    .build();
+            while (opModeIsActive()) {
+                Actions.runBlocking(
+                    drive.actionBuilder(new Pose2d(0, 0, 0))
+                            .lineToX(DISTANCE)
+                            .lineToX(0)
+                            .build());
+            }
+        } else if (TuningOpModes.DRIVE_CLASS.equals(TankDrive.class)) {
+            TankDrive drive = new TankDrive(hardwareMap, new Pose2d(0, 0, 0));
 
-            new SequentialCommand(
-                    false,
-                    follower.followPath(forwardPath),
-                    new WaitCommand(0.5),
-                    follower.followPath(backwardPath),
-                    new WaitCommand(0.5)
-            ).repeatForever().schedule();
-        } else throw new IllegalStateException("Robot must have a trajectory/path follower!");
+            if (drive.localizer instanceof TwoDeadWheelLocalizer) {
+                if (TwoDeadWheelLocalizer.PARAMS.perpXTicks == 0 && TwoDeadWheelLocalizer.PARAMS.parYTicks == 0) {
+                    throw new RuntimeException("Odometry wheel locations not set! Run AngularRampLogger to tune them.");
+                }
+            } else if (drive.localizer instanceof ThreeDeadWheelLocalizer) {
+                if (ThreeDeadWheelLocalizer.PARAMS.perpXTicks == 0 && ThreeDeadWheelLocalizer.PARAMS.par0YTicks == 0 && ThreeDeadWheelLocalizer.PARAMS.par1YTicks == 1) {
+                    throw new RuntimeException("Odometry wheel locations not set! Run AngularRampLogger to tune them.");
+                }
+            }
+            waitForStart();
+
+            while (opModeIsActive()) {
+                Actions.runBlocking(
+                    drive.actionBuilder(new Pose2d(0, 0, 0))
+                            .lineToX(DISTANCE)
+                            .lineToX(0)
+                            .build());
+            }
+        } else {
+            throw new RuntimeException();
+        }
     }
 }
