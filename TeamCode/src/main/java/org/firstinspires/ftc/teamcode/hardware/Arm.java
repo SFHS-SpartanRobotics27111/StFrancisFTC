@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.hardware;
+/*package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -15,7 +15,7 @@ public class Arm {
                     * 100.0 / 20.0
                     * 1 / 360.0;
     final double ARM_COLLAPSED_IN = 0;
-    final double ARM_COLLECT = 250 * ARM_TICKS_PER_DEGREE; //needs to change
+    final double ARM_COLLECT = 260 * ARM_TICKS_PER_DEGREE; //needs to change
     final double ARM_CLEAR_BARRIER = 230 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN = 160 * ARM_TICKS_PER_DEGREE; //might need to tweak
     final double ARM_ATTACH_HANGING_HOOK = 120 * ARM_TICKS_PER_DEGREE;
