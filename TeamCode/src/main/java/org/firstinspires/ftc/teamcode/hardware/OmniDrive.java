@@ -9,11 +9,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-/*
- * TODO:
- *  Figure out if we should have encoders for drive motors
- */
-
 public class OmniDrive {
     private final ElapsedTime runtime = new ElapsedTime();
     private final String LEFT_FRONT_DRIVE = "left_front_drive";
@@ -55,7 +50,7 @@ public class OmniDrive {
         imu.initialize(parameters);
     }
 
-    public void driveFirstPerson(double driveY, double driveX, double turn) {
+    public void driveFirstPerson(double driveY, double driveX, double turn, boolean resetYaw) {
         double max;
 
         double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
@@ -63,7 +58,8 @@ public class OmniDrive {
         double rotX = driveX * Math.cos(-botHeading) - driveY * Math.sin(-botHeading);
         double rotY = driveX * Math.sin(-botHeading) - driveY * Math.cos(-botHeading);
 
-        rotX = rotX * 1.1;
+        //rotX *= 1.1;
+        //Commented out currently... uncomment in the event of weird strafing behavior
 
         // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
 
@@ -93,6 +89,10 @@ public class OmniDrive {
         rightFrontDrive.setPower(rightFrontPower);
         leftBackDrive.setPower(leftBackPower);
         rightBackDrive.setPower(rightBackPower);
+
+        if (resetYaw) {
+            imu.resetYaw();
+        }
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime);
