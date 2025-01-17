@@ -7,6 +7,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Claw {
     private static final String clawName = "claw";
+    public boolean previousInput = false;
+    public boolean clawOpen = false;
     public Servo claw;
 
     private final Telemetry telemetry;
@@ -17,13 +19,17 @@ public class Claw {
         claw = hardwareMap.get(Servo.class, clawName);
     }
 
-    public void moveClaw(boolean open, boolean close) {
+    public void moveClaw(boolean clawToggle) {
         // need to document which one is in and which one is out
         // also extract magic numbers into final members
-       if (open) {
+        if ((previousInput != clawToggle) && clawToggle) {
+            clawOpen = !clawOpen;
+        }
+
+       if (clawOpen) {
            claw.setPosition(0.1);
            telemetry.addData("Claw", "Open");
-       } else if (close) {
+       } else {
            claw.setPosition(1.0);
            telemetry.addData("Claw", "Closing");
        }
