@@ -16,10 +16,11 @@ public class MeepMeepTesting {
                 .setConstraints(50, 50, Math.toRadians(180), Math.toRadians(180), 14.811136386145428)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(49, -45, 90))
-                .splineTo(new Vector2d(46, 40), Math.PI / 2)
-                //.splineTo(new Vector2d(30, 30), Math.PI / 2)
-                .splineTo(new Vector2d(0, 50), Math.PI)
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-24, 58, 0))
+                                .lineToX(38)
+
+                .splineTo(new Vector2d(38, 24), Math.PI / 2)
+                //.splineTo(new Vector2d(0, 50), Math.PI)
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_OFFICIAL)

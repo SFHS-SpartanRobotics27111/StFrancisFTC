@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.tuning.TuningOpModes;
 public final class SplineTestMine extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(49, -45, 90);
+        Pose2d beginPose = new Pose2d(-24, 58, 0);
 
             PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
 
@@ -19,9 +19,9 @@ public final class SplineTestMine extends LinearOpMode {
 
             Actions.runBlocking(
                     drive.actionBuilder(beginPose)
-                            .splineTo(new Vector2d(46, 40), Math.PI / 2)
-                            //.splineTo(new Vector2d(30, 30), Math.PI / 2)
-                            .splineTo(new Vector2d(0, 50), Math.PI)
+
+                            .lineToX(38)
+                            .splineTo(new Vector2d(38, 24), Math.PI / 2)
                             .build());
         }
 
