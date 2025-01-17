@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.hardware.Arm;
 import org.firstinspires.ftc.teamcode.hardware.Claw;
 import org.firstinspires.ftc.teamcode.hardware.OmniDrive;
 
-@TeleOp(name = "Robot Centric Omni TeleOp", group = "Robot")
+@TeleOp(name = "Field Centric Omni TeleOp", group = "Robot")
 public class RobotTeleopPOV_Linear extends LinearOpMode {
     @Override
     public void runOpMode() {
