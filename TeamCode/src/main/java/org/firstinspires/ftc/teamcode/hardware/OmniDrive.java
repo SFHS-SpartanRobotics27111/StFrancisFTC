@@ -58,8 +58,9 @@ public class OmniDrive {
         double rotX = driveX * Math.cos(-botHeading) - driveY * Math.sin(-botHeading);
         double rotY = driveX * Math.sin(-botHeading) - driveY * Math.cos(-botHeading);
 
-        //rotX *= 1.1;
+        rotX *= 1.1;
         //Commented out currently... uncomment in the event of weird strafing behavior
+        //there was weird strafing behavior...
 
         // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
 
