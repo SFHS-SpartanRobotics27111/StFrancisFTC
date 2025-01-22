@@ -16,7 +16,7 @@ public class Arm {
                     * 1 / 360.0;
     final double ARM_COLLAPSED_IN = 0;
     final double ARM_COLLECT = 260 * ARM_TICKS_PER_DEGREE; //needs to change
-    final double ARM_CLEAR_BARRIER = 230 * ARM_TICKS_PER_DEGREE;
+    final double ARM_CLEAR_BARRIER = 225 * ARM_TICKS_PER_DEGREE;
     final double ARM_SCORE_SPECIMEN = 160 * ARM_TICKS_PER_DEGREE; //might need to tweak
     final double ARM_ATTACH_HANGING_HOOK = 123 * ARM_TICKS_PER_DEGREE;
     final double ARM_WINCH_ROBOT = 15 * ARM_TICKS_PER_DEGREE;

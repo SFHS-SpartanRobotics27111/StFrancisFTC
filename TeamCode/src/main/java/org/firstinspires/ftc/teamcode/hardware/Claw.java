@@ -19,17 +19,19 @@ public class Claw {
         claw = hardwareMap.get(Servo.class, clawName);
     }
 
-    public void moveClaw(boolean clawToggle) {
+    public void moveClaw(boolean clawOpen, boolean clawClose) {
         // need to document which one is in and which one is out
         // also extract magic numbers into final members
+        /*
         if ((previousInput != clawToggle) && clawToggle) {
             clawOpen = !clawOpen;
         }
+        */
 
        if (clawOpen) {
            claw.setPosition(0.1);
            telemetry.addData("Claw", "Open");
-       } else {
+       } else if (clawClose) {
            claw.setPosition(1.0);
            telemetry.addData("Claw", "Closing");
        }

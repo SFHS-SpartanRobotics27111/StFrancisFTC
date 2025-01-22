@@ -56,7 +56,7 @@ public class OmniDrive {
         double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
         double rotX = driveX * Math.cos(-botHeading) - driveY * Math.sin(-botHeading);
-        double rotY = driveX * Math.sin(-botHeading) - driveY * Math.cos(-botHeading);
+        double rotY = driveX * Math.sin(-botHeading) + driveY * Math.cos(-botHeading);
 
         rotX *= 1.1;
         //Commented out currently... uncomment in the event of weird strafing behavior
