@@ -48,9 +48,9 @@ public class Arm {
     public Action moveArm(double Arm_position) {
         return new Action() {
 
-            @Override
+            //@Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
+                 telemetry.addLine("attempting to move arm");
                 arm.setTargetPosition((int) (Arm_position));
 
                 ((DcMotorEx) arm).setVelocity(2100);
@@ -60,8 +60,10 @@ public class Arm {
 
 
                 }
-                return false;
+
+             return false;
             }
+
 
 
         };

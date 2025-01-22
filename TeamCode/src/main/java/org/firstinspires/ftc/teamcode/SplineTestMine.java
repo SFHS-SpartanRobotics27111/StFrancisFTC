@@ -30,22 +30,23 @@ public final class SplineTestMine extends LinearOpMode {
         final double ARM_WINCH_ROBOT = 15 * ARM_TICKS_PER_DEGREE;
 
             waitForStart();
+        Actions.runBlocking(
+                arm.moveArm(ARM_SCORE_SPECIMEN)
 
 
-            /*Actions.runBlocking(
+
+        );
+
+
+            Actions.runBlocking(
                     drive.actionBuilder(beginPose)
 
                             .lineToX(38)
                             .splineTo(new Vector2d(38, 24), Math.PI / 2)
 
 
-                            .build());*/
-            Actions.runBlocking(
+                            .build());
 
-                    arm.moveArm(ARM_COLLECT)
-
-
-            );
 
 
 
