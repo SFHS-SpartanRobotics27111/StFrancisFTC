@@ -31,7 +31,7 @@ public final class SplineTestMine extends LinearOpMode {
 
             waitForStart();
         Actions.runBlocking(
-                arm.moveArm(ARM_SCORE_SPECIMEN)
+                arm.moveArm(ARM_CLEAR_BARRIER)
 
 
 
