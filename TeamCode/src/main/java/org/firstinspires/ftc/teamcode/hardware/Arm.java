@@ -37,17 +37,17 @@ public class Arm {
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public void moveArmWithEncoder(boolean a, boolean b, boolean x, boolean y, boolean up, boolean down, double rt, double lt) {
-        if (a) {
+    public void moveArmWithEncoder(boolean cross, boolean circle, boolean square, boolean triangle, boolean up, boolean down, double r2, double l2) {
+        if (cross) {
             armPosition = ARM_COLLECT;
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
-        } else if (b) {
+        } else if (circle) {
             armPosition = ARM_CLEAR_BARRIER;
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
-        } else if (x) {
+        } else if (square) {
             armPosition = ARM_SCORE_SPECIMEN;
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
-        } else if (y) {
+        } else if (triangle) {
             armPosition = ARM_COLLAPSED_IN;
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
         } else if (up) {
@@ -58,7 +58,7 @@ public class Arm {
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
         }
 
-        armPositionFudgeFactor = FUDGE_FACTOR * (rt + (-lt));
+        armPositionFudgeFactor = FUDGE_FACTOR * (r2 + (-l2));
 
         arm.setTargetPosition((int) (armPosition + armPositionFudgeFactor));
 
