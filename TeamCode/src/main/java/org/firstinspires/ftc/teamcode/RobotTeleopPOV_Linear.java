@@ -28,7 +28,7 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
             // joystick y is negative for forward, so negate it
             drive.driveFirstPerson(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x, gamepad1.options);
             arm.moveArmWithEncoder(gamepad2.cross, gamepad2.circle, gamepad2.square, gamepad2.triangle, gamepad2.dpad_up, gamepad2.dpad_down, gamepad2.right_trigger, gamepad2.left_trigger);
-            claw.moveClaw(gamepad1.cross, gamepad1.circle);
+            claw.moveClaw(gamepad1.right_bumper, gamepad1.left_bumper);
 
             telemetry.update();
 
