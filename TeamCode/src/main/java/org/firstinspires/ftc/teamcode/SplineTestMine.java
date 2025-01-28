@@ -7,8 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.hardware.Arm;
 import org.firstinspires.ftc.teamcode.tuning.TuningOpModes;
-import org.firstinspires.ftc.teamcode.hardware.claw_auto;
-
 @Autonomous(name="Lazarus", group="Linear OpMode")
 public final class SplineTestMine extends LinearOpMode {
     @Override
@@ -16,9 +14,8 @@ public final class SplineTestMine extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         Pose2d beginPose = new Pose2d(-24, 58, 0);
 
-            PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
-            Arm arm = new Arm(hardwareMap, telemetry);
-        claw_auto claw = new claw_auto(hardwareMap, telemetry);
+        PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
+        Arm arm = new Arm(hardwareMap, telemetry);
         final double ARM_TICKS_PER_DEGREE =
                 28
                         * 250047.0 / 4913.0
@@ -32,34 +29,28 @@ public final class SplineTestMine extends LinearOpMode {
         final double ARM_ATTACH_HANGING_HOOK = 123 * ARM_TICKS_PER_DEGREE;
         final double ARM_WINCH_ROBOT = 15 * ARM_TICKS_PER_DEGREE;
 
-            waitForStart();
-        /*Actions.runBlocking(
+        waitForStart();
+        Actions.runBlocking(
                 arm.moveArm(ARM_CLEAR_BARRIER)
 
 
 
-
-        );*/
-        Actions.runBlocking(
-                claw.openClaw()
-
         );
 
 
+        Actions.runBlocking(
+                drive.actionBuilder(beginPose)
 
-           /* Actions.runBlocking(
-                    drive.actionBuilder(beginPose)
-
-                            .lineToX(38)
-                            .splineTo(new Vector2d(38, 24), Math.PI / 2)
+                        .lineToX(38)
+                        .splineTo(new Vector2d(38, 24), Math.PI / 2)
 
 
-                            .build());*/
-
+                        .build());
 
 
 
-        }
+
+    }
 
 
-        }
+}

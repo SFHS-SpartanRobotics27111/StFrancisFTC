@@ -50,7 +50,7 @@ public class Arm {
 
             //@Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                 telemetry.addLine("attempting to move arm");
+                telemetry.addLine("attempting to move arm");
                 arm.setTargetPosition((int) (Arm_position));
 
                 ((DcMotorEx) arm).setVelocity(2100);
@@ -62,7 +62,7 @@ public class Arm {
 
                 }
 
-             return arm.isBusy();
+                return arm.isBusy();
             }
 
 

@@ -41,6 +41,11 @@ public class claw_auto {
 
 
                 claw.setPosition(0.1);
+                try {
+                    claw.wait(3);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 telemetry.addData("Claw", "Open");
 
 
@@ -68,6 +73,11 @@ public class claw_auto {
 
                 claw.setPosition(1.0);
                 telemetry.addData("Claw", "Close");
+                try {
+                    claw.wait(3);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
 
 
                 return false;
