@@ -19,7 +19,6 @@ public class Claw {
     }
 
     public void moveClaw(boolean clawOpen, boolean clawClose) {
-
        if (clawOpen) {
            claw.setPosition(0.3);
            telemetry.addData("Claw", "Open");

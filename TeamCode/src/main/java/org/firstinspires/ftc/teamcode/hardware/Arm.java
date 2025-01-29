@@ -15,11 +15,11 @@ public class Arm {
                     * 100.0 / 20.0
                     * 1 / 360.0;
     final double ARM_COLLAPSED_IN = 0;
-    final double ARM_COLLECT = 260 * ARM_TICKS_PER_DEGREE; //needs to change
-    final double ARM_CLEAR_BARRIER = 225 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SPECIMEN = 180 * ARM_TICKS_PER_DEGREE; //might need to tweak
-    final double ARM_ATTACH_HANGING_HOOK = 123 * ARM_TICKS_PER_DEGREE;
-    final double ARM_WINCH_ROBOT = 15 * ARM_TICKS_PER_DEGREE;
+    final double ARM_COLLECT = 256 * ARM_TICKS_PER_DEGREE; //needs to change
+    final double ARM_CLEAR_BARRIER = 221 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SPECIMEN = 176 * ARM_TICKS_PER_DEGREE; //might need to tweak
+    final double ARM_ATTACH_HANGING_HOOK = 119 * ARM_TICKS_PER_DEGREE;
+    final double ARM_WINCH_ROBOT = 14 * ARM_TICKS_PER_DEGREE;
     final double FUDGE_FACTOR = 20 * ARM_TICKS_PER_DEGREE;
     private final Telemetry telemetry;
     public DcMotor arm;
