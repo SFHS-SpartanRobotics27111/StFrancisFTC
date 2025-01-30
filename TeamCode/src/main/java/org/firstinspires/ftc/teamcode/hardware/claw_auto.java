@@ -25,14 +25,11 @@ public class claw_auto {
 
         claw = hardwareMap.get(Servo.class, clawName);
     }
-
-    public Action openClaw() {
-        return new Action() {
-
-            //@Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                // need to document which one is in and which one is out
-                // also extract magic numbers into final members
+    public class Openclaw implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            // need to document which one is in and which one is out
+            // also extract magic numbers into final members
         /*
         if ((previousInput != clawToggle) && clawToggle) {
             clawOpen = !clawOpen;
@@ -40,50 +37,47 @@ public class claw_auto {
         */
 
 
-                claw.setPosition(0.1);
-                try {
-                    claw.wait(3);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                telemetry.addData("Claw", "Open");
+            claw.setPosition(0.1);
+
+            telemetry.addData("Claw", "Open");
 
 
-                return false;
-            }
-
-
-        };
+            return false;
+        }
 
 
     }
+    public Action OpenClaw() {
+        return new Openclaw();
+    }
 
-    public Action closeClaw() {
-        return new Action() {
 
-            //@Override
-            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-                // need to document which one is in and which one is out
-                // also extract magic numbers into final members
+public class closeClaw implements Action {
+    //@Override
+    public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+        // need to document which one is in and which one is out
+        // also extract magic numbers into final members
         /*
         if ((previousInput != clawToggle) && clawToggle) {
             clawOpen = !clawOpen;
         }
         */
+        try {
+            claw.setPosition(1.0);
+            telemetry.addData("Claw", "Close");
+        } catch (Exception e) {
+            return false;
+        }
 
-                claw.setPosition(1.0);
-                telemetry.addData("Claw", "Close");
-                try {
-                    claw.wait(3);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-
-                return false;
-            }
-
-
-        };
+        return false;
     }
+
+
 }
+public Action closeClaw(){
+        return new closeClaw();
+}
+}
+
+
+
