@@ -5,10 +5,9 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import org.firstinspires.ftc.teamcode.hardware.Arm;
+import org.firstinspires.ftc.teamcode.hardware.arm_auto;
 import org.firstinspires.ftc.teamcode.hardware.claw_auto;
-import org.firstinspires.ftc.teamcode.tuning.TuningOpModes;
-@Autonomous(name="Robot Auto Drive 3 samples blue", group="Linear OpMode")
+@Autonomous(name="ODOMETRY Robot Auto Drive 3 samples Observation Zone", group="Linear OpMode")
 public final class SplineTestMine extends LinearOpMode {
     @Override
 
@@ -16,7 +15,7 @@ public final class SplineTestMine extends LinearOpMode {
         Pose2d beginPose = new Pose2d(-12, 61, Math.PI / 2);
 
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
-        Arm arm = new Arm(hardwareMap, telemetry);
+        arm_auto arm = new arm_auto(hardwareMap, telemetry);
         final double ARM_TICKS_PER_DEGREE =
                 28
                         * 250047.0 / 4913.0
@@ -24,16 +23,16 @@ public final class SplineTestMine extends LinearOpMode {
                         * 1 / 360.0;
         final double ARM_COLLAPSED_IN = 0;
 
-        final double ARM_COLLECT = 260 * ARM_TICKS_PER_DEGREE; //needs to change
-        final double ARM_CLEAR_BARRIER = 230 * ARM_TICKS_PER_DEGREE;
-        final double ARM_SCORE_SPECIMEN = 160 * ARM_TICKS_PER_DEGREE; //might need to tweak
-        final double ARM_ATTACH_HANGING_HOOK = 123 * ARM_TICKS_PER_DEGREE;
-        final double ARM_WINCH_ROBOT = 15 * ARM_TICKS_PER_DEGREE;
+        final double ARM_COLLECT = 256 * ARM_TICKS_PER_DEGREE; //needs to change
+        final double ARM_CLEAR_BARRIER = 221 * ARM_TICKS_PER_DEGREE;
+        final double ARM_SCORE_SPECIMEN = 176 * ARM_TICKS_PER_DEGREE; //might need to tweak
+        final double ARM_ATTACH_HANGING_HOOK = 119 * ARM_TICKS_PER_DEGREE;
+        final double ARM_WINCH_ROBOT = 14 * ARM_TICKS_PER_DEGREE;
+        final double FUDGE_FACTOR = 20 * ARM_TICKS_PER_DEGREE;
         claw_auto claw = new claw_auto(hardwareMap, telemetry);
 
         waitForStart();
-        Actions.runBlocking(
-                claw.closeClaw());
+
 
 
 
@@ -43,20 +42,18 @@ public final class SplineTestMine extends LinearOpMode {
 
                         .strafeTo(new Vector2d(-12, 48))
                         .strafeTo(new Vector2d(-35, 48))
-                        //claw.openClaw()
-                        //.splineTo(new Vector2d(0, 36), -Math.PI / 2)
                         .strafeTo(new Vector2d(-38, 14))
-                        .strafeTo(new Vector2d(-46, 6))
+                        .strafeTo(new Vector2d(-46, 9))
                         .strafeTo(new Vector2d(-46, 56))
-                        .strafeTo(new Vector2d(-46, 6))
-                        .strafeTo(new Vector2d(-55, 6))
+                        .strafeTo(new Vector2d(-46, 9))
+                        .strafeTo(new Vector2d(-55, 9))
                         .strafeTo(new Vector2d(-55, 56))
-                        .strafeTo(new Vector2d(-55, 6))
-                        .strafeTo(new Vector2d(-61, 6))
-                        .strafeTo(new Vector2d(-61, 56))
-                        .strafeTo(new Vector2d(-61, 45))
+                        .strafeTo(new Vector2d(-55, 9))
+                        .strafeTo(new Vector2d(-62, 9))
+                        .strafeTo(new Vector2d(-62, 56))
+                        .strafeTo(new Vector2d(-62, 45))
                         .strafeTo(new Vector2d(-54, 45))
-                        .splineTo(new Vector2d(-55, 46 ), Math.PI)
+                        .turn(Math.toRadians(180))
                         .strafeTo(new Vector2d(-55, 55))
                 //claw.openClaw()
 
