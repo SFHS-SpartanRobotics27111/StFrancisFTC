@@ -15,11 +15,11 @@ public class Arm {
                     * 100.0 / 20.0
                     * 1 / 360.0;
     final double ARM_COLLAPSED_IN = 0;
-    final double ARM_COLLECT = 260 * ARM_TICKS_PER_DEGREE; //needs to change
-    final double ARM_CLEAR_BARRIER = 230 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SPECIMEN = 160 * ARM_TICKS_PER_DEGREE; //might need to tweak
-    final double ARM_ATTACH_HANGING_HOOK = 123 * ARM_TICKS_PER_DEGREE;
-    final double ARM_WINCH_ROBOT = 15 * ARM_TICKS_PER_DEGREE;
+    final double ARM_COLLECT = 256 * ARM_TICKS_PER_DEGREE; //needs to change
+    final double ARM_CLEAR_BARRIER = 221 * ARM_TICKS_PER_DEGREE;
+    final double ARM_SCORE_SPECIMEN = 176 * ARM_TICKS_PER_DEGREE; //might need to tweak
+    final double ARM_ATTACH_HANGING_HOOK = 119 * ARM_TICKS_PER_DEGREE;
+    final double ARM_WINCH_ROBOT = 14 * ARM_TICKS_PER_DEGREE;
     final double FUDGE_FACTOR = 20 * ARM_TICKS_PER_DEGREE;
     private final Telemetry telemetry;
     public DcMotor arm;
@@ -37,17 +37,17 @@ public class Arm {
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    public void moveArmWithEncoder(boolean a, boolean b, boolean x, boolean y, boolean up, boolean down, double rt, double lt) {
-        if (a) {
+    public void moveArmWithEncoder(boolean cross, boolean circle, boolean square, boolean triangle, boolean up, boolean down, double r2, double l2) {
+        if (cross) {
             armPosition = ARM_COLLECT;
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
-        } else if (b) {
+        } else if (circle) {
             armPosition = ARM_CLEAR_BARRIER;
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
-        } else if (x) {
+        } else if (square) {
             armPosition = ARM_SCORE_SPECIMEN;
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
-        } else if (y) {
+        } else if (triangle) {
             armPosition = ARM_COLLAPSED_IN;
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
         } else if (up) {
@@ -58,7 +58,7 @@ public class Arm {
             telemetry.addData("Arm position: ", arm.getCurrentPosition());
         }
 
-        armPositionFudgeFactor = FUDGE_FACTOR * (rt + (-lt));
+        armPositionFudgeFactor = FUDGE_FACTOR * (r2 + (-l2));
 
         arm.setTargetPosition((int) (armPosition + armPositionFudgeFactor));
 
