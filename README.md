@@ -44,3 +44,8 @@ external 5:1 reduction. This creates a total ~254.47:1 reduction.
 The wrist is powered by a goBILDA Torque Servo (2000-0025-0002).
 
 The intake wheels are powered by a goBILDA Speed Servo (2000-0025-0003) in Continuous Rotation mode.
+
+
+# Pinpoint Odometry 
+We are using a Gobilda Pinpoint Odometry Computer with 2 Gobilda odometry pods and the roadrunner library 
+Documentation can be found undfer the 1.0 section at https://rr.brott.dev/docs/v1-0/tuning/

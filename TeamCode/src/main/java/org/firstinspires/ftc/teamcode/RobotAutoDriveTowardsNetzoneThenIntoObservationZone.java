@@ -53,7 +53,7 @@
   * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
   */
  
- @Autonomous(name = "Robot: Auto Drive Towards Net Zone then into Observation Zone: Mecanum Wheel", group = "Robot")
+ @Autonomous(name = "TIME BASED: Robot: Auto Drive Towards Net Zone then into Observation Zone: Mecanum Wheel", group = "Robot")
  public class RobotAutoDriveTowardsNetzoneThenIntoObservationZone extends LinearOpMode {
  
      static final double FORWARD_SPEED = 0.9;
