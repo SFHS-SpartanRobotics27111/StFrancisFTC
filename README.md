@@ -1,84 +1,51 @@
-# SparkFun OTOS Quickstart for Roadrunner 1.0
+# St. Francis FTC Code
 
-The SparkFun OTOS or Optical Tracking Odometry Sensor is an optical-based odometry sensor with an integrated IMU.
-This repository allows teams to integrate it into Roadrunner as a drop-in replacement.
+Team code for St. Francis
 
-## Notes and Warnings
-Ensure that your sensor is properly mounted 10mm above the ground using the directions on the product page.
+# Setting up
 
-The OTOS sensor is designed to ONLY work on official field tiles.
-Ensure that all tuning is performed on them. 
-(If you have nothing else to test on, it seems to also be able to track a hardwood floor as well.
-However, tuning numbers will likely be different between them.)
+-   Make sure the Gradle Runtime (Settings > Build, Execution, Deployment >
+    Build Tools > Gradle) is set to JetBrains Runtime 17.X.X. If it isn't, make
+    sure to download that JDK from the same dropdown.
+-   Do not upgrade Gradle or the Android Gradle Plugin if Android Studio prompts
+    you to.
 
-The custom localization is implemented using the SparkFunOTOSDrive class, which *extends* MecanumDrive.
-This means that all of RoadRunner's standard tuning should remain in MecanumDrive, but you should use SparkFunOTOSDrive
-in your OpModes.
+# Git Best Practices
 
-~~I eventually plan to PR this in some form once it's been more extensively tested.~~ 
-11/13/24 edit: I have opened PRs for the underlying library changes required for my integration, but they have not been merged; it seems like rbrott would prefer an official integration to rethink the tuning process entirely (which is reasonable but not something I personally have the time/knowledge for). See https://github.com/acmerobotics/road-runner-ftc/issues/8 and the linked PR's for further discussion.
+-   Fetch and pull before you push to avoid merge conflicts.
+-   All features should be developed in their own branches and merged into main
+    once they are done. The main branch should always be buildable and in a
+    working order
+-   Double check the files changed before you commit, especially any
+    configuration files, as Android Studio can change them without telling you.
 
-## When things go wrong…
-This quickstart has not been extensively tested, and you are likely to encounter bugs and issues. 
-If this happens, or if there's anything you're confused about or don't understand, the best way to get help is
-making a post in roadrunner-help on the FTC Discord with your MecanumDrive and SparkFunOTOSDrive attached and pinging me
-(@j5155).
-If you're certain that you've found a bug,
-or you have a feature request, you may also make an issue in the Issues tab above. 
+# Running
 
-Do NOT make an issue on the official Roadrunner quickstart while you are using this one.
+-   Set up the robot config on the Driver Hub
+-   Connect computer to robot wifi
+-   Make sure Android Studio device is set to the robot
+-   Run and stop the program in Android Studio
+-   Select and start the OpMode on the Driver Hub
 
-## Tuning
+# Robot Information
 
-### Configure Hardware
+This robot has a two-motor differential-steered (sometimes called tank or skid steer) drivetrain
+with a left and right drive motor.
 
-Configure your drive motors in MecanumDrive
-   as explained [here](https://rr.brott.dev/docs/v1-0/tuning/#drive-classes). 
-Make sure to properly reverse them using MecanumDirectionDebugger by following the official docs.
+The drive wheels are 96mm diameter traction (Rhino) or omni wheels.
+They are driven by 2x 5203-2402-0019 312RPM Yellow Jacket Planetary Gearmotors.
 
-Tuning currently also requires a properly configured Control Hub or Expansion Hub IMU in MecanumDrive. 
-This will be fixed in the future, but for now make sure your hub orientation is properly defined.
+This robot's main scoring mechanism includes an arm powered by a motor, a "wrist" driven
+by a servo, and an intake driven by a continuous rotation servo.
 
-Also, make sure to configure the OTOS in your hardware config. 
-By default, SparkFunOTOSDrive will look for a sensor named sensor_otos,
-but you can change this in SparkFunOTOSDrive line 70.
+The arm is powered by a 5203-2402-0051 (50.9:1 Yellow Jacket Planetary Gearmotor) with an
+external 5:1 reduction. This creates a total ~254.47:1 reduction.
 
-Note that, to mitigate an issue with the OTOS driver in SDK version 9.2,
-you must currently configure the OTOS as "SparkFunOTOS Corrected" in your hardware config.
-### Tune Scalars and Offsets
-First, tune the Angular Scalar by running the OTOSAngularScalar OpMode and following the instructions. 
-This will allow you to get the maximum accuracy from the OTOS IMU.
+The wrist is powered by a goBILDA Torque Servo (2000-0025-0002).
 
-After you have tuned the angular scalar, the IMU will be accurate enough to tune the heading offset.
-Run OTOSHeadingOffsetTuner and follow the instructions.
-
-Next, tune the Linear Scalar using the LocalizationTest OpMode.
-Again, ensure that you perform this tuning on field tiles so that the OTOS gives accurate data.
-SparkFun's official instructions to do are as follows:
-> To calibrate the linear scalar, move the
-robot a known distance and measure the error; do this multiple times at
-multiple speeds to get an average, then set the linear scalar to the
-inverse of the error.
-> For example, if you move the robot 100 inches and
-the sensor reports 103 inches, set the linear scalar to 100/103 = 0.971
-
-Set the Linear Scalar at line 56 of SparkFunOTOSDrive.
-
-Next, tune the Position Offset using OTOSPositionOffsetTuner by following the instructions. 
-This should ensure that the OTOS is properly aware of its location on the robot.
-
-As a final step to ensure everything is working properly,
-run LocalizationTest again and try driving around, spinning in place, etc. 
-to make sure everything is working properly.
-
-### Begin Roadrunner Tuning
-Follow the [official RoadRunner docs](https://rr.brott.dev/docs/v1-0/tuning/#forwardramplogger-dead-wheels-only) for the remaining tuning steps.
-However, make sure to start at ForwardRampLogger and follow the steps labeled "dead wheels."
-
-Additionally, when you run AngularRampLogger,
-you can ignore the odometry position graphs and only use the trackWidthTicks one.
-
-Once you have completed the official docs for tuning, you should be good to go to use Roadrunner as normal!
+The intake wheels are powered by a goBILDA Speed Servo (2000-0025-0003) in Continuous Rotation mode.
 
 
-
+# Pinpoint Odometry 
+We are using a Gobilda Pinpoint Odometry Computer with 2 Gobilda odometry pods and the roadrunner library 
+Documentation can be found undfer the 1.0 section at https://rr.brott.dev/docs/v1-0/tuning/
