@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
 
-public class arm_auto {
+public class ArmAuto {
     private static final String armName = "left_arm";
     final double ARM_TICKS_PER_DEGREE =
             28

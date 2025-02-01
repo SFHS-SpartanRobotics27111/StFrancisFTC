@@ -5,8 +5,8 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import org.firstinspires.ftc.teamcode.hardware.arm_auto;
-import org.firstinspires.ftc.teamcode.hardware.claw_auto;
+import org.firstinspires.ftc.teamcode.hardware.ArmAuto;
+import org.firstinspires.ftc.teamcode.hardware.ClawAuto;
 @Autonomous(name="ODOMETRY Robot Auto Drive 3 samples Observation Zone", group="Linear OpMode")
 public final class SplineTestMine extends LinearOpMode {
     @Override
@@ -15,7 +15,7 @@ public final class SplineTestMine extends LinearOpMode {
         Pose2d beginPose = new Pose2d(-12, 61, Math.PI / 2);
 
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
-        arm_auto arm = new arm_auto(hardwareMap, telemetry);
+        ArmAuto arm = new ArmAuto(hardwareMap, telemetry);
         final double ARM_TICKS_PER_DEGREE =
                 28
                         * 250047.0 / 4913.0
@@ -29,7 +29,7 @@ public final class SplineTestMine extends LinearOpMode {
         final double ARM_ATTACH_HANGING_HOOK = 119 * ARM_TICKS_PER_DEGREE;
         final double ARM_WINCH_ROBOT = 14 * ARM_TICKS_PER_DEGREE;
         final double FUDGE_FACTOR = 20 * ARM_TICKS_PER_DEGREE;
-        claw_auto claw = new claw_auto(hardwareMap, telemetry);
+        ClawAuto claw = new ClawAuto(hardwareMap, telemetry);
 
         waitForStart();
 

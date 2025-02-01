@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.acmerobotics.roadrunner.ftc.Actions;
 
-public class claw_auto {
+public class ClawAuto {
     private static final String clawName = "claw";
     public boolean previousInput = false;
     public boolean clawOpen = false;
