@@ -58,12 +58,10 @@ public class ArmAuto {
                     telemetry.addLine("MOTOR EXCEEDED CURRENT LIMIT!!");
 
 
-
                 }
 
                 return arm.isBusy();
             }
-
 
 
         };

@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
@@ -26,9 +26,9 @@ public class Arm {
     double armPosition = (int) ARM_COLLAPSED_IN;
     double armPositionFudgeFactor;
 
-    public Arm(HardwareMap hardwareMap, Telemetry telemetry1) {
-        telemetry = telemetry1;
-        arm = hardwareMap.get(DcMotor.class, armName);
+    public Arm(LinearOpMode op) {
+        telemetry = op.telemetry;
+        arm = op.hardwareMap.get(DcMotor.class, armName);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ((DcMotorEx) arm).setCurrentAlert(5, CurrentUnit.AMPS);
 

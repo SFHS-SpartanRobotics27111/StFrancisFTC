@@ -13,11 +13,11 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
     @Override
     public void runOpMode() {
         // set up motors
-        OmniDrive drive = new OmniDrive(hardwareMap, telemetry);
-        Arm arm = new Arm(hardwareMap, telemetry);
+        OmniDrive drive = new OmniDrive(this);
+        Arm arm = new Arm(this);
 
         // set up servos
-        Claw claw = new Claw(hardwareMap, telemetry);
+        Claw claw = new Claw(this);
 
         telemetry.addData(">", "Setup complete. Press start");
         telemetry.update();

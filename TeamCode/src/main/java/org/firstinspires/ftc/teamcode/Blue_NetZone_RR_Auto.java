@@ -3,11 +3,13 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
 import org.firstinspires.ftc.teamcode.hardware.ArmAuto;
 import org.firstinspires.ftc.teamcode.hardware.ClawAuto;
-@Autonomous(name="ODOMETRY: Robot Auto Drive 3 Sample Net Zone + LV 1 Ascent", group="Linear OpMode")
+
+@Autonomous(name = "ODOMETRY: Robot Auto Drive 3 Sample Net Zone + LV 1 Ascent", group = "Linear OpMode")
 public final class Blue_NetZone_RR_Auto extends LinearOpMode {
     @Override
 
@@ -36,9 +38,6 @@ public final class Blue_NetZone_RR_Auto extends LinearOpMode {
         waitForStart();
 
 
-
-
-
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
 
@@ -62,13 +61,6 @@ public final class Blue_NetZone_RR_Auto extends LinearOpMode {
                         .build());
         Actions.runBlocking(
                 arm.moveArm(ARM_CONTACT_BAR_AUTO));
-
-
-
-
-
-
-
 
 
     }

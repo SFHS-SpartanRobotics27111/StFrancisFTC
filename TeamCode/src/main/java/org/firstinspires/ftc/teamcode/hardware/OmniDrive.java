@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -22,13 +22,13 @@ public class OmniDrive {
     public DcMotor rightBackDrive;
     public IMU imu;
 
-    public OmniDrive(HardwareMap hardwareMap, Telemetry telemetry1) {
-        telemetry = telemetry1;
-        leftFrontDrive = hardwareMap.get(DcMotor.class, LEFT_FRONT_DRIVE);
-        leftBackDrive = hardwareMap.get(DcMotor.class, LEFT_BACK_DRIVE);
-        rightFrontDrive = hardwareMap.get(DcMotor.class, RIGHT_FRONT_DRIVE);
-        rightBackDrive = hardwareMap.get(DcMotor.class, RIGHT_BACK_DRIVE);
-        imu = hardwareMap.get(IMU.class, "imu");
+    public OmniDrive(LinearOpMode op) {
+        telemetry = op.telemetry;
+        leftFrontDrive = op.hardwareMap.get(DcMotor.class, LEFT_FRONT_DRIVE);
+        leftBackDrive = op.hardwareMap.get(DcMotor.class, LEFT_BACK_DRIVE);
+        rightFrontDrive = op.hardwareMap.get(DcMotor.class, RIGHT_FRONT_DRIVE);
+        rightBackDrive = op.hardwareMap.get(DcMotor.class, RIGHT_BACK_DRIVE);
+        imu = op.hardwareMap.get(IMU.class, "imu");
 
         // To drive forward, one motor must be reversed because the axles point in opposite directions
         leftFrontDrive.setDirection(DcMotor.Direction.REVERSE);

@@ -3,11 +3,13 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
 import org.firstinspires.ftc.teamcode.hardware.ArmAuto;
 import org.firstinspires.ftc.teamcode.hardware.ClawAuto;
-@Autonomous(name="ODOMETRY Robot Auto Drive 3 samples Observation Zone", group="Linear OpMode")
+
+@Autonomous(name = "ODOMETRY Robot Auto Drive 3 samples Observation Zone", group = "Linear OpMode")
 public final class SplineTestMine extends LinearOpMode {
     @Override
 
@@ -34,9 +36,6 @@ public final class SplineTestMine extends LinearOpMode {
         waitForStart();
 
 
-
-
-
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
 
@@ -55,36 +54,34 @@ public final class SplineTestMine extends LinearOpMode {
                         .strafeTo(new Vector2d(-54, 45))
                         .turn(Math.toRadians(180))
                         .strafeTo(new Vector2d(-55, 55))
-                //claw.openClaw()
+                        //claw.openClaw()
 
-                //.strafeTo(new Vector2d(-47, 1))
+                        //.strafeTo(new Vector2d(-47, 1))
 
-                /*.strafeTo(new Vector2d(-47, 55))
-                        .waitSeconds(5)
-                .strafeTo(new Vector2d(-47, 1))
-                        .waitSeconds(5)
-                .strafeTo(new Vector2d(-57, 1))
-                        .waitSeconds(5)
-                .strafeTo(new Vector2d(-57, 55))
-                        .waitSeconds(5)
-                .strafeTo(new Vector2d(-57, 1))
-                        .waitSeconds(5)
-                .strafeTo(new Vector2d(-64, 1))
-                        .waitSeconds(5)
-                .strafeTo(new Vector2d(-64, 55))
-                        .waitSeconds(5)
-                .strafeTo(new Vector2d(-64, 45))
-                        .waitSeconds(5)
-                .strafeTo(new Vector2d(-64, 55))*/
-                //blocks END
+                        /*.strafeTo(new Vector2d(-47, 55))
+                                .waitSeconds(5)
+                        .strafeTo(new Vector2d(-47, 1))
+                                .waitSeconds(5)
+                        .strafeTo(new Vector2d(-57, 1))
+                                .waitSeconds(5)
+                        .strafeTo(new Vector2d(-57, 55))
+                                .waitSeconds(5)
+                        .strafeTo(new Vector2d(-57, 1))
+                                .waitSeconds(5)
+                        .strafeTo(new Vector2d(-64, 1))
+                                .waitSeconds(5)
+                        .strafeTo(new Vector2d(-64, 55))
+                                .waitSeconds(5)
+                        .strafeTo(new Vector2d(-64, 45))
+                                .waitSeconds(5)
+                        .strafeTo(new Vector2d(-64, 55))*/
+                        //blocks END
 
 
                         .build());
 
 
-
-
     }
 
 
-    }
+}

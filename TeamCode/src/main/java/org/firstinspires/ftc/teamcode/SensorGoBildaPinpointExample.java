@@ -29,9 +29,6 @@ import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriverRR;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 import java.util.Locale;
 
 /*
@@ -60,7 +57,7 @@ For support, contact tech@gobilda.com
 -Ethan Doak
  */
 
-@TeleOp(name="Dont Use/Run ADd Odometry to Robot Config", group="Linear OpMode")
+@TeleOp(name = "Dont Use/Run ADd Odometry to Robot Config", group = "Linear OpMode")
 //@Disabled
 public class SensorGoBildaPinpointExample extends LinearOpMode {
 
@@ -75,7 +72,7 @@ public class SensorGoBildaPinpointExample extends LinearOpMode {
         // Initialize the hardware variables. Note that the strings used here must correspond
         // to the names assigned during the robot configuration step on the DS or RC devices.
 
-        odo = hardwareMap.get(GoBildaPinpointDriverRR.class,"pinpoint");
+        odo = hardwareMap.get(GoBildaPinpointDriverRR.class, "pinpoint");
 
         /*
         Set the odometry pod positions relative to the point that the odometry computer tracks around.
@@ -138,11 +135,11 @@ public class SensorGoBildaPinpointExample extends LinearOpMode {
             odo.update();
 
 
-            if (gamepad1.a){
+            if (gamepad1.a) {
                 odo.resetPosAndIMU(); //resets the position to 0 and recalibrates the IMU
             }
 
-            if (gamepad1.b){
+            if (gamepad1.b) {
                 odo.recalibrateIMU(); //recalibrates the IMU without resetting position
             }
 
@@ -153,8 +150,8 @@ public class SensorGoBildaPinpointExample extends LinearOpMode {
             that cycle time.
              */
             double newTime = getRuntime();
-            double loopTime = newTime-oldTime;
-            double frequency = 1/loopTime;
+            double loopTime = newTime - oldTime;
+            double frequency = 1 / loopTime;
             oldTime = newTime;
 
 
@@ -170,11 +167,11 @@ public class SensorGoBildaPinpointExample extends LinearOpMode {
             gets the current Velocity (x & y in inches/sec and heading in radians/sec) and prints it.
              */
             PoseVelocity2d vel = odo.getVelocityRR();
-            String velocity = String.format(Locale.US,"{XVel: %.3f, YVel: %.3f, HVel: %.3f}", vel.linearVel.x, vel.linearVel.y, vel.angVel);
+            String velocity = String.format(Locale.US, "{XVel: %.3f, YVel: %.3f, HVel: %.3f}", vel.linearVel.x, vel.linearVel.y, vel.angVel);
             telemetry.addData("Velocity", velocity);
 
             telemetry.addData("X Encoder:", odo.getEncoderX()); //gets the raw data from the X encoder
-            telemetry.addData("Y Encoder:",odo.getEncoderY()); //gets the raw data from the Y encoder
+            telemetry.addData("Y Encoder:", odo.getEncoderY()); //gets the raw data from the Y encoder
             telemetry.addData("Pinpoint Frequency", odo.getFrequency()); //prints/gets the current refresh rate of the Pinpoint
 
             /*
@@ -191,4 +188,5 @@ public class SensorGoBildaPinpointExample extends LinearOpMode {
             telemetry.addData("REV Hub Frequency: ", frequency); //prints the control system refresh rate
             telemetry.update();
         }
-    }}
+    }
+}
