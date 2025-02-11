@@ -16,7 +16,7 @@ public class ClawAuto {
     public boolean clawOpen = false;
     public Servo claw;
 
-    public claw_auto(HardwareMap hardwareMap, Telemetry telemetry1) {
+    public ClawAuto(HardwareMap hardwareMap, Telemetry telemetry1) {
         telemetry = telemetry1;
 
         claw = hardwareMap.get(Servo.class, clawName);
