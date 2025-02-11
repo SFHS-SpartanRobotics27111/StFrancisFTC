@@ -20,7 +20,7 @@ public class ClawAuto {
 
     private final Telemetry telemetry;
 
-    public claw_auto(HardwareMap hardwareMap, Telemetry telemetry1) {
+    public ClawAuto(HardwareMap hardwareMap, Telemetry telemetry1) {
         telemetry = telemetry1;
 
         claw = hardwareMap.get(Servo.class, clawName);
