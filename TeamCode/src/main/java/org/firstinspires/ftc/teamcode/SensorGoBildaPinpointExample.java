@@ -26,6 +26,7 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriver;
 import com.acmerobotics.roadrunner.ftc.GoBildaPinpointDriverRR;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -58,7 +59,7 @@ For support, contact tech@gobilda.com
  */
 
 @TeleOp(name = "Dont Use/Run ADd Odometry to Robot Config", group = "Linear OpMode")
-//@Disabled
+@Disabled
 public class SensorGoBildaPinpointExample extends LinearOpMode {
 
     GoBildaPinpointDriverRR odo; // Declare OpMode member for the Odometry Computer
