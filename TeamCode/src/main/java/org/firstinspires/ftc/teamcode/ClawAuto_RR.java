@@ -3,19 +3,17 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.hardware.ArmAuto;
 import org.firstinspires.ftc.teamcode.hardware.ClawAuto;
-
-@Autonomous(name = "ODOMETRY: Robot Auto Drive 3 Sample Net Zone + LV 1 Ascent", group = "Linear OpMode")
-public final class Blue_NetZone_RR_Auto extends LinearOpMode {
+@Autonomous(name="ODOMETRY: Robot 180 turn test", group="Linear OpMode")
+public final class ClawAuto_RR extends LinearOpMode {
     @Override
 
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(35, 61, Math.PI / 2);
-        Pose2d endPose = new Pose2d(31, 9, Math.PI);
+        Pose2d beginPose = new Pose2d(0, 48, -Math.PI / 2);
+
 
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
         ArmAuto arm = new ArmAuto(hardwareMap, telemetry);
@@ -36,33 +34,47 @@ public final class Blue_NetZone_RR_Auto extends LinearOpMode {
         ClawAuto claw = new ClawAuto(hardwareMap, telemetry);
 
         waitForStart();
+        /*Actions.runBlocking(
+                claw.OpenClaw());*/
+
+
+
+
+
 
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
 
-                        .strafeTo(new Vector2d(50, 61))
-                        .strafeTo(new Vector2d(35, 61))
-                        .strafeTo(new Vector2d(38, 15))
-                        .strafeTo(new Vector2d(46, 9))
-                        .strafeTo(new Vector2d(46, 56))
-                        .strafeTo(new Vector2d(46, 9))
-                        .strafeTo(new Vector2d(55, 9))
-                        .strafeTo(new Vector2d(55, 56))
-                        .strafeTo(new Vector2d(55, 9))
-                        .strafeTo(new Vector2d(62, 9))
-                        .strafeTo(new Vector2d(62, 56))
-                        .strafeTo(new Vector2d(62, 9))
-                        .strafeTo(new Vector2d(31, 9))
-                        .turn(Math.toRadians(90))
-                        .strafeTo(new Vector2d(17, 9))
+                        .turn(Math.PI) //use radians, can also use Math.toRadians function
 
 
                         .build());
 
+        /*Actions.runBlocking(
+                arm.moveArm(ARM_SCORE_SPECIMEN));;
+        Actions.runBlocking(
+                claw.OpenClaw());
+        Actions.runBlocking(
+                drive.actionBuilder(beginPose)
+
+                        .strafeTo(new Vector2d(0, 70))
+                        .build());
+
+         */
 
 
-    }
+
+
+
+
+
+
+
+
+
+
+    ;}
 
 
 }
