@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.hardware.ArmAuto;
 import org.firstinspires.ftc.teamcode.hardware.ClawAuto;
 @Autonomous(name="ODOMETRY: Robot 180 turn test", group="Linear OpMode")
-public final class ClawAuto_RR extends LinearOpMode {
+public final class TurnTest_RR extends LinearOpMode {
     @Override
 
     public void runOpMode() throws InterruptedException {

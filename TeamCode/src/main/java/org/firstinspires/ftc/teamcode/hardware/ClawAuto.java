@@ -35,9 +35,15 @@ public class ClawAuto {
             clawOpen = !clawOpen;
         }
         */
+            try {
+                claw.setPosition(0.3);
+                telemetry.addData("Claw", "Close");
+            } catch (Exception e) {
+                return false;
+            }
 
 
-            claw.setPosition(0.1);
+
 
             telemetry.addData("Claw", "Open");
 

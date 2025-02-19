@@ -20,7 +20,7 @@ public class MeepMeepTesting {
         //myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(12, -61, -Math.PI / 2)) // red observation start
       //  myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-35, -61, Math.PI / 2)) // red net start
                 //myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-35, -61, Math.PI)) // remove this eventually(debug start)
-                myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(0, 48, -Math.PI / 2))
+                myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(0, 70, -Math.PI / 2))
 
                         //blue samples
 
@@ -80,25 +80,17 @@ public class MeepMeepTesting {
                 .strafeTo(new Vector2d(55, -55))*/
 
                        //claw start
-                        .turn(Math.PI)
+                        //.turn(Math.PI)
                //arm.moveArm(ARM_SCORE_SPECIMEN)
                //claw.openClaw
 
-              /* .strafeTo(new Vector2d(38, 15))
-               .strafeTo(new Vector2d(46, 9))
-               .strafeTo(new Vector2d(46, 56))
-               .strafeTo(new Vector2d(46, 9))
-               .strafeTo(new Vector2d(55, 9))
-               .strafeTo(new Vector2d(55, 56))
-               .strafeTo(new Vector2d(55, 9))
-               .strafeTo(new Vector2d(62, 9))
-               .strafeTo(new Vector2d(62, 56))
-               .strafeTo(new Vector2d(62, 9))
-               .strafeTo(new Vector2d(31, 9))
-               .turn(Math.toRadians(90))
-               .strafeTo(new Vector2d(17, 9))
+               .strafeTo(new Vector2d(0, 45))
+                        //arm.moveArm(ARM_SCORE_SPECIMEN)
+                        //claw.openClaw
 
-               */
+
+
+
 
 
 
