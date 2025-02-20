@@ -32,7 +32,7 @@ public class ArmAuto {
     double armPosition = (int) ARM_COLLAPSED_IN;
     double armPositionFudgeFactor;
 
-    public arm_auto(HardwareMap hardwareMap, Telemetry telemetry1) {
+    public ArmAuto(HardwareMap hardwareMap, Telemetry telemetry1) {
         telemetry = telemetry1;
         arm = hardwareMap.get(DcMotor.class, armName);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
