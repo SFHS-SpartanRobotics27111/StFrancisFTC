@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -25,7 +26,15 @@ public final class ClawAuto_RR extends LinearOpMode {
         Claw claw = new Claw(this);
 
         waitForStart();
-       Actions.runBlocking(
+
+        /* List of Actions to make for this to work:
+        * 1. Close claw onto the specimen on init
+        * 2. Parallel Action: Raise arm to scoring position at the same time as pulling away from wall and turning toward high chamber
+        * 3. Sequential Action: Move forward to clip on specimen then open claw
+        * later 4. Arm down to clear specimen and back up, then put the arm vertical when not scoring or picking up a piece
+        * */
+
+        Actions.runBlocking(
         new ParallelAction(
                 claw.moveClawAction(true),
                 arm.moveArm(arm.getARM_SCORE_SPECIMEN())
@@ -36,47 +45,7 @@ public final class ClawAuto_RR extends LinearOpMode {
         // required time for claw to run to position 650 milliseconds
         Actions.runBlocking(
                 claw.moveClawAction(false)
-        );// JOHNNY SCHWAN ASSIGNMENT - DELETE OLD AUTO FILES - RENAME USAGES OF CLAW + ARM - WORK IN NEW BRANCH - MAKE PR
+        );
         sleep(650);
-
-
-
-
-
-
-
-//        Actions.runBlocking(
-//                drive.actionBuilder(beginPose)
-//
-//                        .turn(Math.PI) //use radians, can also use Math.toRadians function
-//
-//
-//                        .build());
-
-        /*Actions.runBlocking(
-                arm.moveArm(ARM_SCORE_SPECIMEN));;
-        Actions.runBlocking(
-                claw.OpenClaw());
-        Actions.runBlocking(
-                drive.actionBuilder(beginPose)
-
-                        .strafeTo(new Vector2d(0, 70))
-                        .build());
-
-         */
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
 }
