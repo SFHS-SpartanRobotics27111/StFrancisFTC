@@ -30,6 +30,7 @@ public class Arm {
     double armPosition = (int) ARM_COLLAPSED_IN;
     double armPositionFudgeFactor;
 
+
     public Arm(LinearOpMode op) {
         telemetry = op.telemetry;
         arm = op.hardwareMap.get(DcMotor.class, armName);
@@ -39,6 +40,10 @@ public class Arm {
         arm.setTargetPosition((int) ARM_COLLAPSED_IN);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public double getARM_SCORE_SPECIMEN() {
+        return ARM_SCORE_SPECIMEN;
     }
 
     public void moveArmWithEncoder(boolean cross, boolean circle, boolean square, boolean triangle, boolean up, boolean down, double r2, double l2) {

@@ -19,6 +19,7 @@ public final class Blue_NetZone_RR_Auto extends LinearOpMode {
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
+
                         .strafeTo(new Vector2d(50, 61))
                         .strafeTo(new Vector2d(35, 61))
                         .strafeTo(new Vector2d(38, 15))
