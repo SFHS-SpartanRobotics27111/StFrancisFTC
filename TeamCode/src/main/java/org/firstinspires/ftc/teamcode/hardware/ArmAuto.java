@@ -56,16 +56,9 @@ public class ArmAuto {
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 if (((DcMotorEx) arm).isOverCurrent()) {
                     telemetry.addLine("MOTOR EXCEEDED CURRENT LIMIT!!");
-
-
                 }
-
                 return arm.isBusy();
             }
-
-
         };
-
-
     }
 }

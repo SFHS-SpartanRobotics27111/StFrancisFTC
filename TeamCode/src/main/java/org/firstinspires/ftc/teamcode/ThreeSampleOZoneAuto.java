@@ -38,7 +38,6 @@ public final class ThreeSampleOZoneAuto extends LinearOpMode {
 
         Actions.runBlocking(
                 drive.actionBuilder(beginPose)
-
                         .strafeTo(new Vector2d(-12, 48))
                         .strafeTo(new Vector2d(-35, 48))
                         .strafeTo(new Vector2d(-38, 14))
@@ -54,34 +53,7 @@ public final class ThreeSampleOZoneAuto extends LinearOpMode {
                         .strafeTo(new Vector2d(-54, 45))
                         .turn(Math.toRadians(180))
                         .strafeTo(new Vector2d(-55, 55))
-                        //claw.openClaw()
-
-                        //.strafeTo(new Vector2d(-47, 1))
-
-                        /*.strafeTo(new Vector2d(-47, 55))
-                                .waitSeconds(5)
-                        .strafeTo(new Vector2d(-47, 1))
-                                .waitSeconds(5)
-                        .strafeTo(new Vector2d(-57, 1))
-                                .waitSeconds(5)
-                        .strafeTo(new Vector2d(-57, 55))
-                                .waitSeconds(5)
-                        .strafeTo(new Vector2d(-57, 1))
-                                .waitSeconds(5)
-                        .strafeTo(new Vector2d(-64, 1))
-                                .waitSeconds(5)
-                        .strafeTo(new Vector2d(-64, 55))
-                                .waitSeconds(5)
-                        .strafeTo(new Vector2d(-64, 45))
-                                .waitSeconds(5)
-                        .strafeTo(new Vector2d(-64, 55))*/
-                        //blocks END
-
-
-                        .build());
-
-
+                        .build()
+        );
     }
-
-
 }
