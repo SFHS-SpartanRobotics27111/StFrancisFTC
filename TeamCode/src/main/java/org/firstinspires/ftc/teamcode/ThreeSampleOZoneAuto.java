@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.hardware.ArmAuto;
 import org.firstinspires.ftc.teamcode.hardware.ClawAuto;
 
 @Autonomous(name = "ODOMETRY Robot Auto Drive 3 samples Observation Zone", group = "Linear OpMode")
-public final class SplineTestMine extends LinearOpMode {
+public final class ThreeSampleOZoneAuto extends LinearOpMode {
     @Override
 
     public void runOpMode() throws InterruptedException {
