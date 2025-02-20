@@ -119,7 +119,7 @@ public class MecanumDrive {
 
         double maxPowerMag = 1;
         for (DualNum<Time> power : wheelVels.all()) {
-            maxPowerMag = Math.max(maxPowerMag, power.value());
+            maxPowerMag = java.lang.Math.max(maxPowerMag, power.value());
         }
 
         leftFront.setPower(wheelVels.leftFront.get(0) / maxPowerMag);

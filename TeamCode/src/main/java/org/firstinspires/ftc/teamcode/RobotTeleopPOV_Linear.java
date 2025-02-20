@@ -31,9 +31,6 @@ public class RobotTeleopPOV_Linear extends LinearOpMode {
             claw.moveClaw(gamepad1.right_bumper, gamepad1.left_bumper);
 
             telemetry.update();
-
-            // Pace this loop so jaw action is reasonable speed.
-            sleep(50);
         }
     }
 }
