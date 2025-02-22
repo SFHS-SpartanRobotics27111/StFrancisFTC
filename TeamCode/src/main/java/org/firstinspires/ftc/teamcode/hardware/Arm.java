@@ -45,6 +45,9 @@ public class Arm {
     public double getARM_SCORE_SPECIMEN() {
         return ARM_SCORE_SPECIMEN;
     }
+    public double getARM_ATTACH_HANGING_HOOK() {
+        return ARM_ATTACH_HANGING_HOOK;
+    }
 
     public void moveArmWithEncoder(boolean cross, boolean circle, boolean square, boolean triangle, boolean up, boolean down, double r2, double l2) {
         if (cross) {
