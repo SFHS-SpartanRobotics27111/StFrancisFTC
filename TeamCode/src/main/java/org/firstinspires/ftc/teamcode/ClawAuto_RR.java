@@ -36,14 +36,20 @@ public final class ClawAuto_RR extends LinearOpMode {
          
         Actions.runBlocking(
             new ParallelAction(
-                arm.moveArm(arm.getARM_SCORE_SPECIMEN())
+                arm.moveArm(arm.getARM_SCORE_SPECIMEN()),
+                    drive.actionBuilder(beginPose)
+                            .splineTo(new Vector2d(36, 48), 0)
+                            .build()
             )
         );
         sleep(650);
         
         Actions.runBlocking(
             new SequentialAction(
-                claw.moveClawAction(true),
+                drive.actionBuilder(new Pose2d(36, 48, 0))
+                                .splineTo(new Vector2d(40, 48), 0)
+                                        .build(),
+                    claw.moveClawAction(true),
                 arm.moveArm(arm.getARM_ATTACH_HANGING_HOOK())
             )
         );

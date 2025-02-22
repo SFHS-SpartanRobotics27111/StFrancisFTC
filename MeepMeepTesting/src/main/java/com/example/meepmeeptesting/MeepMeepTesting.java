@@ -6,6 +6,8 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
+import com.acmerobotics.roadrunner.ParallelAction;
+import com.acmerobotics.roadrunner.SequentialAction;
 
 public class MeepMeepTesting {
     public static void main(String[] args) {
@@ -20,91 +22,8 @@ public class MeepMeepTesting {
         //myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(12, -61, -Math.PI / 2)) // red observation start
       //  myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-35, -61, Math.PI / 2)) // red net start
                 //myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-35, -61, Math.PI)) // remove this eventually(debug start)
-                myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(0, 48, -Math.PI / 2))
-
-                        //blue samples
-
-                       /* .strafeTo(new Vector2d(-12, 48))
-                        .strafeTo(new Vector2d(-35, 48))
-                        .strafeTo(new Vector2d(-38, 14))
-                        .strafeTo(new Vector2d(-46, 9))
-                        .strafeTo(new Vector2d(-46, 56))
-                        .strafeTo(new Vector2d(-46, 9))
-                        .strafeTo(new Vector2d(-55, 9))
-                        .strafeTo(new Vector2d(-55, 56))
-                        .strafeTo(new Vector2d(-55, 9))
-                        .strafeTo(new Vector2d(-62, 9))
-                        .strafeTo(new Vector2d(-62, 56))
-                        .strafeTo(new Vector2d(-62, 45))
-                        .strafeTo(new Vector2d(-54, 45))
-                        .turn(Math.toRadians(180))
-                        .strafeTo(new Vector2d(-55, 55))*/
-
-
-
-
-
-                //net zone FIRST VERSION
-              /* .strafeTo(new Vector2d(50, 61))
-               .strafeTo(new Vector2d(35, 61))
-               .strafeTo(new Vector2d(38, 15))
-               .strafeTo(new Vector2d(46, 9))
-               .strafeTo(new Vector2d(46, 56))
-               .strafeTo(new Vector2d(46, 9))
-               .strafeTo(new Vector2d(55, 9))
-               .strafeTo(new Vector2d(55, 56))
-               .strafeTo(new Vector2d(55, 9))
-               .strafeTo(new Vector2d(62, 9))
-               .strafeTo(new Vector2d(62, 56))
-               .strafeTo(new Vector2d(62, 9))
-               .strafeTo(new Vector2d(31, 9))
-               .turn(Math.toRadians(90))
-               .strafeTo(new Vector2d(17, 9))*/
-
-        //red observation
-
-                /*.strafeTo(new Vector2d(12, -48))
-                .strafeTo(new Vector2d(35, -48))
-                .strafeTo(new Vector2d(38, -14))
-                .strafeTo(new Vector2d(46, -6))
-                .strafeTo(new Vector2d(46, -56))
-                .strafeTo(new Vector2d(46, -6))
-                .strafeTo(new Vector2d(55, -6))
-                .strafeTo(new Vector2d(55, -56))
-                .strafeTo(new Vector2d(55, -6))
-                .strafeTo(new Vector2d(61, -6))
-                .strafeTo(new Vector2d(61, -56))
-                .strafeTo(new Vector2d(61, -45))
-                .strafeTo(new Vector2d(54, -45))
-                .turn(Math.toRadians(180))
-                .strafeTo(new Vector2d(55, -55))*/
-
-                       //claw start
-                        .turn(Math.PI)
-               //arm.moveArm(ARM_SCORE_SPECIMEN)
-               //claw.openClaw
-
-              /* .strafeTo(new Vector2d(38, 15))
-               .strafeTo(new Vector2d(46, 9))
-               .strafeTo(new Vector2d(46, 56))
-               .strafeTo(new Vector2d(46, 9))
-               .strafeTo(new Vector2d(55, 9))
-               .strafeTo(new Vector2d(55, 56))
-               .strafeTo(new Vector2d(55, 9))
-               .strafeTo(new Vector2d(62, 9))
-               .strafeTo(new Vector2d(62, 56))
-               .strafeTo(new Vector2d(62, 9))
-               .strafeTo(new Vector2d(31, 9))
-               .turn(Math.toRadians(90))
-               .strafeTo(new Vector2d(17, 9))
-
-               */
-
-
-
-
-
-
+                myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(0, 48, Math.PI / 2))
+                        .splineTo(new Vector2d(36, 48), 0)
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_OFFICIAL)
