@@ -3,16 +3,15 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.hardware.Arm;
-import org.firstinspires.ftc.teamcode.hardware.ArmAuto;
 import org.firstinspires.ftc.teamcode.hardware.Claw;
-import org.firstinspires.ftc.teamcode.hardware.ClawAuto;
 
-@Autonomous(name = "ODOMETRY: Robot 180 turn test", group = "Linear OpMode")
+@Autonomous(name = "1 Specimen on High Chamber", group = "Linear OpMode")
 public final class ClawAuto_RR extends LinearOpMode {
 
     @Override
@@ -22,7 +21,13 @@ public final class ClawAuto_RR extends LinearOpMode {
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
         Arm arm = new Arm(this);
         Claw claw = new Claw(this);
-        
+
+        TrajectoryActionBuilder toChamber = drive.actionBuilder(beginPose)
+                        .splineTo(new Vector2d(36, 48), 0);
+
+        TrajectoryActionBuilder Score = drive.actionBuilder(drive.pinpoint.getPositionRR())
+                .splineTo(new Vector2d(40, 48), 0);
+
         claw.moveClawAction(false);
 
         waitForStart();
@@ -37,18 +42,14 @@ public final class ClawAuto_RR extends LinearOpMode {
         Actions.runBlocking(
             new ParallelAction(
                 arm.moveArm(arm.getARM_SCORE_SPECIMEN()),
-                    drive.actionBuilder(beginPose)
-                            .splineTo(new Vector2d(36, 48), 0)
-                            .build()
+                    toChamber.build()
             )
         );
         sleep(650);
         
         Actions.runBlocking(
             new SequentialAction(
-                drive.actionBuilder(new Pose2d(36, 48, 0))
-                                .splineTo(new Vector2d(40, 48), 0)
-                                        .build(),
+                    Score.build(),
                     claw.moveClawAction(true),
                 arm.moveArm(arm.getARM_ATTACH_HANGING_HOOK())
             )
