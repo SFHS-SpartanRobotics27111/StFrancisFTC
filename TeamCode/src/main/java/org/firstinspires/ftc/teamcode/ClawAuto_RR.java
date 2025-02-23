@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.hardware.Arm;
 import org.firstinspires.ftc.teamcode.hardware.Claw;
+import org.firstinspires.ftc.teamcode.hardware.PinpointDrive;
 
 @Autonomous(name = "1 Specimen on High Chamber", group = "Linear OpMode")
 public final class ClawAuto_RR extends LinearOpMode {

@@ -6,6 +6,8 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.hardware.PinpointDrive;
+
 @Autonomous(name = "ODOMETRY Robot Auto Drive 3 samples Observation Zone", group = "Linear OpMode")
 public final class ThreeSampleOZoneAuto extends LinearOpMode {
     @Override
