@@ -13,12 +13,13 @@ public class MeepMeepTesting {
 
         MeepMeep meepMeep = new MeepMeep(800);
 
-        RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep).build();
+        RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
+                .setConstraints(50, 50, Math.toRadians(180), Math.toRadians(180), 15)
+                .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(beginPose)
                 .splineTo(new Vector2d(36, 48), 0)
-                .build()
-        );
+                .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_OFFICIAL)
                 .setDarkMode(true)
