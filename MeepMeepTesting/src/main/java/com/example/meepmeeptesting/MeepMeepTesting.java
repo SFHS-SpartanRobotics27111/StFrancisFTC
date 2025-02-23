@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
+import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 
 public class MeepMeepTesting {
     public static void main(String[] args) {
@@ -18,8 +19,8 @@ public class MeepMeepTesting {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(beginPose)
-                .splineTo(new Vector2d(36, 48), 0)
-                .build());
+                .splinetoLinearHeading(new Pose2d(-46, 9, Math.PI / 2), -Math.PI / 2)
+                );
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_OFFICIAL)
                 .setDarkMode(true)

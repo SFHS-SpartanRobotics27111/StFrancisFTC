@@ -17,19 +17,24 @@ public final class ClawAuto_RR extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d beginPose = new Pose2d(0, 48, Math.PI / 2);
+        Pose2d beginPose = new Pose2d(10, -65, -Math.PI);
 
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
         Arm arm = new Arm(this);
         Claw claw = new Claw(this);
 
         TrajectoryActionBuilder toChamber = drive.actionBuilder(beginPose)
-                        .splineTo(new Vector2d(36, 48), 0);
+                .strafeToLinearHeading(new Vector2d(0, -42), Math.PI / 2);
 
-        TrajectoryActionBuilder Score = drive.actionBuilder(drive.pinpoint.getPositionRR())
-                .splineTo(new Vector2d(40, 48), 0);
+        TrajectoryActionBuilder Backup = drive.actionBuilder(drive.pinpoint.getPositionRR())
+                .lineToY(-55);
 
-        claw.moveClawAction(false);
+        TrajectoryActionBuilder SplineToPush = drive.actionBuilder(drive.pinpoint.getPositionRR())
+                .splineTo(new Vector2d(-46, 9), (3 * Math.PI) / 2);
+
+        Actions.runBlocking(
+            claw.moveClawAction(false)
+        );
 
         waitForStart();
 
@@ -41,20 +46,29 @@ public final class ClawAuto_RR extends LinearOpMode {
          * */
          
         Actions.runBlocking(
-            new ParallelAction(
-                arm.moveArm(arm.getARM_SCORE_SPECIMEN()),
+            new SequentialAction(
+                arm.moveArm(arm.ARM_SCORE_SPECIMEN + 8),
                     toChamber.build()
             )
         );
-        sleep(650);
+        sleep(560);
         
         Actions.runBlocking(
-            new SequentialAction(
-                    Score.build(),
-                    claw.moveClawAction(true),
-                arm.moveArm(arm.getARM_ATTACH_HANGING_HOOK())
-            )
+                claw.moveClawAction(true)
         );
-        sleep(650);
+        sleep(560);
+
+        Actions.runBlocking(
+                Backup.build()
+        );
+        sleep(560);
+
+        Actions.runBlocking(
+                new ParallelAction(
+                arm.moveArm(arm.ARM_ATTACH_HANGING_HOOK),
+                        SplineToPush.build()
+                )
+        );
+        sleep(560);
     }
 }
