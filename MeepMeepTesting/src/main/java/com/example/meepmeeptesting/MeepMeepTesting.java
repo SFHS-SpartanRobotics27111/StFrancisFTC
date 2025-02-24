@@ -27,6 +27,10 @@ public class MeepMeepTesting {
 
                 .lineToY(56)
                 .lineToY(31)
+                .splineToLinearHeading(new Pose2d(0, 45, -Math.PI /2), -Math.PI / 2)
+                .splineToLinearHeading(new Pose2d(-46, 31, Math.PI /2), -Math.PI /2)
+                .splineToLinearHeading(new Pose2d(0, 45, -Math.PI /2), -Math.PI / 2)
+                .strafeTo(new Vector2d(-39, 65))
 
                 /*.strafeTo(new Vector2d(-46, 9))
                 .strafeTo(new Vector2d(-55, 9))
