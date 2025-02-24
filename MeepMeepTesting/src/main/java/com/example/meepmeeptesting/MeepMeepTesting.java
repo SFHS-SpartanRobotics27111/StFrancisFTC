@@ -10,7 +10,7 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 public class MeepMeepTesting {
     public static void main(String[] args) {
-        Pose2d beginPose = new Pose2d(-46, 9, Math.PI / 2);
+        Pose2d beginPose = new Pose2d(-46, 9, -Math.PI / 2);
 
         MeepMeep meepMeep = new MeepMeep(800);
 
@@ -25,10 +25,10 @@ public class MeepMeepTesting {
 
 
 
-                .lineToY(56)
-                .lineToY(31)
+                .strafeTo(new Vector2d(-46, 56))
+                .strafeTo(new Vector2d(-46, 56))
                 .splineToLinearHeading(new Pose2d(0, 45, -Math.PI /2), -Math.PI / 2)
-                .splineToLinearHeading(new Pose2d(-46, 31, Math.PI /2), -Math.PI /2)
+                .splineToLinearHeading(new Pose2d(-46, 30, -Math.PI /2), -Math.PI /2)
                 .splineToLinearHeading(new Pose2d(0, 45, -Math.PI /2), -Math.PI / 2)
                 .strafeTo(new Vector2d(-39, 65))
 
