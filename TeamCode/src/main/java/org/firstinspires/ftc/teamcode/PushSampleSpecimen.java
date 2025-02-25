@@ -36,11 +36,17 @@ public final class PushSampleSpecimen extends LinearOpMode {
                 drive.actionBuilder(beginPose)
 
                         .strafeTo(new Vector2d(-46, 56))
+                        .waitSeconds(2)
                         .strafeTo(new Vector2d(-46, 31))
+                        .waitSeconds(2)
                         .splineToLinearHeading(new Pose2d(0, 45, -Math.PI /2), -Math.PI / 2)
-                        .splineToLinearHeading(new Pose2d(-46, 30, -Math.PI /2), -Math.PI /2)
+                        .waitSeconds(2)
+                        .splineToLinearHeading(new Pose2d(-46, 31, Math.PI /2), -Math.PI /2)
+                        .waitSeconds(2)
                         .splineToLinearHeading(new Pose2d(0, 45, -Math.PI /2), -Math.PI / 2)
+                        .waitSeconds(2)
                         .strafeTo(new Vector2d(-39, 65))
+
                         .build()
 
         );
