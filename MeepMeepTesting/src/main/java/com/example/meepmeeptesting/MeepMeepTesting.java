@@ -28,7 +28,7 @@ public class MeepMeepTesting {
 
         TrajectoryActionBuilder SplineToPush = myBot.getDrive().actionBuilder(new Pose2d(0, -65, Math.PI / 2))
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(46, -6, -Math.PI / 2), -Math.PI / 2);
+                .splineToLinearHeading(new Pose2d(48, -13, -Math.PI / 2), -Math.PI / 2);
 
 
         myBot.runAction(

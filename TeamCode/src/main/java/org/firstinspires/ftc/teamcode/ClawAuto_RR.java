@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -26,11 +27,12 @@ public final class ClawAuto_RR extends LinearOpMode {
         TrajectoryActionBuilder toChamber = drive.actionBuilder(beginPose)
                 .strafeToLinearHeading(new Vector2d(0, -42), Math.PI / 2);
 
-        TrajectoryActionBuilder Backup = drive.actionBuilder(drive.pinpoint.getPositionRR())
-                .lineToY(-55);
+        TrajectoryActionBuilder Backup = drive.actionBuilder(new Pose2d(0, -42, Math.PI / 2))
+                .lineToY(-65);
 
-        TrajectoryActionBuilder SplineToPush = drive.actionBuilder(drive.pinpoint.getPositionRR())
-                .splineTo(new Vector2d(-46, 9), (3 * Math.PI) / 2);
+        TrajectoryActionBuilder SplineToPush = drive.actionBuilder(new Pose2d(0, -65, Math.PI / 2))
+                .setTangent(0)
+                .splineToLinearHeading(new Pose2d(48, -13, -Math.PI / 2), -Math.PI / 2);
 
         Actions.runBlocking(
             claw.moveClawAction(false)
@@ -38,36 +40,18 @@ public final class ClawAuto_RR extends LinearOpMode {
 
         waitForStart();
 
-        /* List of Actions to make for this to work:
-         * 1. Close claw onto the specimen on init
-         * 2. Parallel Action: Raise arm to scoring position at the same time as pulling away from wall and turning toward high chamber X?
-         * 3. Sequential Action: Move forward to clip on specimen then open claw X?
-         * later 4. Arm down to clear specimen and back up, then put the arm vertical when not scoring or picking up a piece
-         * */
-         
         Actions.runBlocking(
             new SequentialAction(
-                arm.moveArm(arm.ARM_SCORE_SPECIMEN + 8),
-                    toChamber.build()
+                    arm.moveArm(arm.ARM_SCORE_SPECIMEN + 8),
+                    toChamber.build(),
+                    claw.moveClawAction(true),
+                    new SleepAction(0.3),
+                    Backup.build(),
+                    new ParallelAction(
+                            arm.moveArm(arm.ARM_ATTACH_HANGING_HOOK),
+                            SplineToPush.build()
+                    )
             )
-        );
-        sleep(560);
-        
-        Actions.runBlocking(
-                claw.moveClawAction(true)
-        );
-        sleep(560);
-
-        Actions.runBlocking(
-                Backup.build()
-        );
-        sleep(560);
-
-        Actions.runBlocking(
-                new ParallelAction(
-                arm.moveArm(arm.ARM_ATTACH_HANGING_HOOK),
-                        SplineToPush.build()
-                )
         );
         sleep(560);
     }
