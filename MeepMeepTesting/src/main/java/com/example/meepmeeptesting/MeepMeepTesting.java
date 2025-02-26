@@ -2,8 +2,10 @@
 package com.example.meepmeeptesting;
 
 import com.acmerobotics.roadrunner.Actions;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
@@ -23,19 +25,32 @@ public class MeepMeepTesting {
         TrajectoryActionBuilder toChamber = myBot.getDrive().actionBuilder(beginPose)
                 .strafeToLinearHeading(new Vector2d(0, -42), Math.PI / 2);
 
-        TrajectoryActionBuilder Backup = myBot.getDrive().actionBuilder(new Pose2d(0, -42, Math.PI / 2))
-                .lineToY(-65);
+        TrajectoryActionBuilder backup = myBot.getDrive().actionBuilder(new Pose2d(0, -42, Math.PI / 2))
+                .lineToY(-55);
 
-        TrajectoryActionBuilder SplineToPush = myBot.getDrive().actionBuilder(new Pose2d(0, -65, Math.PI / 2))
+        TrajectoryActionBuilder splineToPush = myBot.getDrive().actionBuilder(new Pose2d(0, -65, Math.PI / 2))
                 .setTangent(0)
-                .splineToLinearHeading(new Pose2d(48, -13, -Math.PI / 2), -Math.PI / 2);
+                .splineToLinearHeading(new Pose2d(48, -13, -Math.PI / 2), -Math.PI / 2)
+                .strafeTo(new Vector2d(43, -13));
+
+        TrajectoryActionBuilder pushCycle1 = myBot.getDrive().actionBuilder(new Pose2d(48, -13, -Math.PI / 2))
+                .lineToY(-56)
+                .lineToY(-49);
+
+        TrajectoryActionBuilder splineToScore2and3 = myBot.getDrive().actionBuilder(new Pose2d(48, -49, -Math.PI / 2))
+                .splineToLinearHeading(new Pose2d(0, -42, Math.PI / 2), Math.PI / 2);
+
+        TrajectoryActionBuilder splineToPickUpLast = myBot.getDrive().actionBuilder(new Pose2d(0, -42, Math.PI / 2))
+                .splineToLinearHeading(new Pose2d(48, -49, -Math.PI / 2), -Math.PI / 2)
+                .lineToY(-55);
+
+        TrajectoryActionBuilder goHome = myBot.getDrive().actionBuilder(new Pose2d(0, -55, Math.PI / 2))
+                .strafeTo(new Vector2d(39, -60));
 
 
         myBot.runAction(
                 new SequentialAction(
-                toChamber.build(),
-                        Backup.build(),
-                        SplineToPush.build()
+                       splineToPush.build()
                 )
         );
 

@@ -39,7 +39,7 @@ public class Claw {
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 telemetry.addLine("attempting to move arm");
                 if (open) {
-                    claw.setPosition(0.3);
+                    claw.setPosition(0.5);
                     telemetry.addData("Claw", "Open");
                 } else {
                     claw.setPosition(1.0);
