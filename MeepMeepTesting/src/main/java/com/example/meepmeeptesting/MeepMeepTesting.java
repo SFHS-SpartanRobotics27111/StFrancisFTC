@@ -10,7 +10,7 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 public class MeepMeepTesting {
     public static void main(String[] args) {
-        Pose2d beginPose = new Pose2d(-46, 9, Math.PI / 2);
+        Pose2d beginPose = new Pose2d(10, -65, -Math.PI);
 
         MeepMeep meepMeep = new MeepMeep(800);
 
@@ -19,31 +19,23 @@ public class MeepMeepTesting {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(beginPose)
-                
+                .strafeToLinearHeading(new Vector2d(0, -42), Math.PI / 2)
+                //.strafeTo(new Vector2d(0,-65))
+                        .strafeTo(new Vector2d(31, -53))
+                        .setTangent(1)
+                .splineToLinearHeading(new Pose2d(45, -13, -Math.PI/2), -Math.PI / 2)
+
+                .splineToLinearHeading(new Pose2d(43, -13, -Math.PI / 2), -Math.PI / 2)
+                .lineToY(-56)
+                .lineToY(-50)
 
 
+                .splineToLinearHeading(new Pose2d(0, -42, Math.PI / 2), Math.PI / 2)
+                        .setTangent(-1)
+                .splineToLinearHeading(new Pose2d(48, -31, -Math.PI / 2), -Math.PI / 2)
+                .strafeTo(new Vector2d(39, -65))
 
 
-
-                .strafeTo(new Vector2d(-46, 56))
-                        .waitSeconds(2)
-                .strafeTo(new Vector2d(-46, 31))
-                        .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(0, 45, -Math.PI /2), -Math.PI / 2)
-                        .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(-46, 31, Math.PI /2), -Math.PI /2)
-                .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(0, 45, -Math.PI /2), -Math.PI / 2)
-                .waitSeconds(2)
-                .strafeTo(new Vector2d(-39, 65))
-
-                /*.strafeTo(new Vector2d(-46, 9))
-                .strafeTo(new Vector2d(-55, 9))
-                .strafeTo(new Vector2d(-55, 56))
-
-               // .strafeTo(new Vector2d(-55, 9))
-
-                 */
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_OFFICIAL)
