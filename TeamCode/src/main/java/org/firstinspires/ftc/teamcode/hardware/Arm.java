@@ -18,12 +18,12 @@ public class Arm {
                     * 250047.0 / 4913.0
                     * 100.0 / 20.0
                     * 1 / 360.0;
-    final double ARM_COLLAPSED_IN = 0;
-    final double ARM_COLLECT = 256 * ARM_TICKS_PER_DEGREE;
-    final double ARM_CLEAR_BARRIER = 221 * ARM_TICKS_PER_DEGREE;
+    public final double ARM_COLLAPSED_IN = 0;
+    public final double ARM_COLLECT = 256 * ARM_TICKS_PER_DEGREE;
+    public final double ARM_CLEAR_BARRIER = 221 * ARM_TICKS_PER_DEGREE;
     public final double ARM_SCORE_SPECIMEN = 176 * ARM_TICKS_PER_DEGREE;
     public final double ARM_ATTACH_HANGING_HOOK = 119 * ARM_TICKS_PER_DEGREE;
-    final double ARM_WINCH_ROBOT = 14 * ARM_TICKS_PER_DEGREE;
+    public final double ARM_WINCH_ROBOT = 14 * ARM_TICKS_PER_DEGREE;
     final double FUDGE_FACTOR = 20 * ARM_TICKS_PER_DEGREE;
     private final Telemetry telemetry;
     public DcMotor arm;

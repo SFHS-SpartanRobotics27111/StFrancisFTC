@@ -27,12 +27,25 @@ public final class ClawAuto_RR extends LinearOpMode {
         TrajectoryActionBuilder toChamber = drive.actionBuilder(beginPose)
                 .strafeToLinearHeading(new Vector2d(0, -42), Math.PI / 2);
 
-        TrajectoryActionBuilder Backup = drive.actionBuilder(new Pose2d(0, -42, Math.PI / 2))
+        TrajectoryActionBuilder backup = drive.actionBuilder(new Pose2d(0, -42, Math.PI / 2))
                 .lineToY(-65);
 
-        TrajectoryActionBuilder SplineToPush = drive.actionBuilder(new Pose2d(0, -65, Math.PI / 2))
+        TrajectoryActionBuilder splineToPush = drive.actionBuilder(new Pose2d(0, -65, Math.PI / 2))
                 .setTangent(0)
                 .splineToLinearHeading(new Pose2d(48, -13, -Math.PI / 2), -Math.PI / 2);
+
+        TrajectoryActionBuilder pushCycle1 = drive.actionBuilder(new Pose2d(48, -13, -Math.PI / 2), -Math.PI / 2)
+                .lineToY(-56)
+                .lineToY(-31);
+
+        TrajectoryActionBuilder splineToScore2and3 = drive.actionBuilder(new Pose2d(48, -31, -Math.PI / 2), -Math.PI / 2)
+                .splineToLinearHeading(new Pose2d(0, -42, Math.PI / 2), Math.PI / 2);
+
+        TrajectoryActionBuilder splineToPickUpLast = drive.actionBuilder(new Pose2d(0, -42, Math.PI / 2), Math.PI / 2)
+                .splineToLinearHeading(new Pose2d(48, -31, -Math.PI / 2), -Math.PI / 2);
+
+        TrajectoryActionBuilder goHome = drive.actionBuilder(new Pose2d(0, -42, Math.PI / 2), Math.PI / 2)
+                ,strafeTo(new Vector2d(39, -65));
 
         Actions.runBlocking(
             claw.moveClawAction(false)
@@ -42,15 +55,39 @@ public final class ClawAuto_RR extends LinearOpMode {
 
         Actions.runBlocking(
             new SequentialAction(
-                    arm.moveArm(arm.ARM_SCORE_SPECIMEN + 8),
-                    toChamber.build(),
-                    claw.moveClawAction(true),
-                    new SleepAction(0.3),
-                    Backup.build(),
-                    new ParallelAction(
-                            arm.moveArm(arm.ARM_ATTACH_HANGING_HOOK),
-                            SplineToPush.build()
-                    )
+                arm.moveArm(arm.ARM_SCORE_SPECIMEN + 8),
+                toChamber.build(),
+                claw.moveClawAction(true),
+                new SleepAction(0.3),
+                backup.build(),
+                new ParallelAction(
+                        arm.moveArm(arm.ARM_ATTACH_HANGING_HOOK),
+                        splineToPush.build()
+                ),
+                pushCycle1.build(),
+                arm.moveArm(arm.ARM_CLEAR_BARRIER),
+                claw.moveClawAction(false),
+                new SleepAction(0.3),
+                new ParallelAction(
+                        arm.moveArm(arm.ARM_SCORE_SPECIMEN),
+                        splineToScore2and3.build()
+                ),
+                claw.moveClawAction(true),
+                new SleepAction(0.3),
+                splineToPickUpLast.build(),
+                arm.moveArm(arm.ARM_CLEAR_BARRIER),
+                claw.moveClawAction(false),
+                new SleepAction(0.3),
+                new ParallelAction(
+                        arm.moveArm(arm.ARM_SCORE_SPECIMEN),
+                        splineToScore2and3.build()
+                ),
+                claw.moveClawAction(true),
+                new SleepAction(0.3),
+                new ParallelAction(
+                        arm.moveArm(arm.ARM_COLLAPSED_IN),
+                        goHome.build()
+                )
             )
         );
         sleep(560);
