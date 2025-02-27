@@ -46,10 +46,10 @@ public final class ClawAuto_RR extends LinearOpMode {
         Action pushCycle1 = drive
                 .actionBuilder(new Pose2d(43, -13, -Math.PI / 2))
                 .lineToY(-56)
-                .lineToY(-50.95)
+                .lineToY(-51)
                 .build();
 
-        TrajectoryActionBuilder splineToScore2and3 = drive
+        TrajectoryActionBuilder splineToScore2 = drive
                 .actionBuilder(new Pose2d(43, -51, -Math.PI / 2))
                 .setTangent(1)
                 .splineToLinearHeading(new Pose2d(0, -42, Math.PI / 2), Math.PI / 2);
@@ -62,7 +62,8 @@ public final class ClawAuto_RR extends LinearOpMode {
 
         Action goHome = drive
                 .actionBuilder(new Pose2d(48, -25, -Math.PI / 2))
-                .strafeTo(new Vector2d(48, -65))
+                .strafeTo(new Vector2d(48, -55))
+                .turn(Math.PI / 2)
                 .build();
 
         Actions.runBlocking(
@@ -88,7 +89,7 @@ public final class ClawAuto_RR extends LinearOpMode {
                         new SleepAction(0.5),
                         new ParallelAction(
                                 arm.moveArm(arm.ARM_SCORE_SPECIMEN + 8),
-                                splineToScore2and3.build()
+                                splineToScore2.build()
                         ),
                         claw.moveClawAction(true),
                         new SleepAction(0.3),
