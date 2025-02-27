@@ -60,7 +60,7 @@ public final class ClawAuto_RR extends LinearOpMode {
                 .build();
 
         Action goHome = drive
-                .actionBuilder(new Pose2d(48, -25, Math.PI / 2))
+                .actionBuilder(new Pose2d(48, -25, -Math.PI / 2))
                 .strafeTo(new Vector2d(48, -65))
                 .build();
 
