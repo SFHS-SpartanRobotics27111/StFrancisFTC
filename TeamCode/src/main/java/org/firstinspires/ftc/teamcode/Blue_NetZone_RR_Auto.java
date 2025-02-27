@@ -35,8 +35,8 @@ public final class Blue_NetZone_RR_Auto extends LinearOpMode {
                         .strafeTo(new Vector2d(62, 56))
                         .strafeTo(new Vector2d(62, 9))
                         .strafeTo(new Vector2d(31, 9))
-                        .turn(Math.toRadians(90))
-                        .strafeTo(new Vector2d(17, 9))
+                        .turn(Math.toRadians(179))
+
                         .build()
         );
     }

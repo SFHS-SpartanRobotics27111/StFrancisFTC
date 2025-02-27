@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.hardware.Arm;
 import org.firstinspires.ftc.teamcode.hardware.Claw;
 import org.firstinspires.ftc.teamcode.hardware.PinpointDrive;
 
-@Autonomous(name = "1 Specimen on High Chamber", group = "Linear OpMode")
+@Autonomous(name = "2 Specimen on High Chamber", group = "Linear OpMode")
 public final class ClawAuto_RR extends LinearOpMode {
 
     @Override
@@ -46,17 +46,18 @@ public final class ClawAuto_RR extends LinearOpMode {
         Action pushCycle1 = drive
                 .actionBuilder(new Pose2d(43, -13, -Math.PI / 2))
                 .lineToY(-56)
-                .lineToY(-51)
+                .lineToY(-50.95)
                 .build();
 
         TrajectoryActionBuilder splineToScore2and3 = drive
                 .actionBuilder(new Pose2d(43, -51, -Math.PI / 2))
+                .setTangent(1)
                 .splineToLinearHeading(new Pose2d(0, -42, Math.PI / 2), Math.PI / 2);
 
         Action splineToPickUpLast = drive
                 .actionBuilder(new Pose2d(0, -42, Math.PI / 2))
-                .lineToY(-55)
-                .splineToLinearHeading(new Pose2d(48, -25, -Math.PI / 2), -Math.PI / 2)
+                .lineToY(-60)
+                .splineToLinearHeading(new Pose2d(50, -25, -Math.PI / 2), -Math.PI / 2)
                 .build();
 
         Action goHome = drive
@@ -84,7 +85,7 @@ public final class ClawAuto_RR extends LinearOpMode {
                         pushCycle1,
                         arm.moveArm(arm.ARM_CLEAR_BARRIER),
                         claw.moveClawAction(false),
-                        new SleepAction(0.45),
+                        new SleepAction(0.5),
                         new ParallelAction(
                                 arm.moveArm(arm.ARM_SCORE_SPECIMEN + 8),
                                 splineToScore2and3.build()
