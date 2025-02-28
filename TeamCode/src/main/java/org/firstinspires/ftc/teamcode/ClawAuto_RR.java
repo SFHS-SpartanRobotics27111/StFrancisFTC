@@ -45,8 +45,8 @@ public final class ClawAuto_RR extends LinearOpMode {
 
         Action pushCycle1 = drive
                 .actionBuilder(new Pose2d(43, -13, -Math.PI / 2))
-                .lineToY(-56)
-                .lineToY(-51)
+                .strafeTo(new Vector2d(43, -56))
+                .strafeTo(new Vector2d(43, -51))
                 .build();
 
         TrajectoryActionBuilder splineToScore2 = drive
