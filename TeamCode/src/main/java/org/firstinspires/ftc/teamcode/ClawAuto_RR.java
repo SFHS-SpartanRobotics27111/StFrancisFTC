@@ -52,7 +52,8 @@ public final class ClawAuto_RR extends LinearOpMode {
         TrajectoryActionBuilder splineToScore2 = drive
                 .actionBuilder(new Pose2d(43, -51, -Math.PI / 2))
                 .setTangent(1)
-                .splineToLinearHeading(new Pose2d(0, -42, Math.PI / 2), Math.PI / 2);
+                .splineToLinearHeading(new Pose2d(0, -50, Math.PI / 2), Math.PI / 2)
+                .strafeTo(new Vector2d(0, -42));
 
         Action splineToPickUpLast = drive
                 .actionBuilder(new Pose2d(0, -42, Math.PI / 2))
@@ -61,9 +62,9 @@ public final class ClawAuto_RR extends LinearOpMode {
                 .build();
 
         Action goHome = drive
-                .actionBuilder(new Pose2d(48, -25, -Math.PI / 2))
-                .strafeTo(new Vector2d(48, -55))
-                .turn(Math.PI / 2)
+                .actionBuilder(new Pose2d(50, -25, -Math.PI / 2))
+                .strafeTo(new Vector2d(50, -55))
+                .turn(Math.PI)
                 .build();
 
         Actions.runBlocking(
@@ -100,6 +101,5 @@ public final class ClawAuto_RR extends LinearOpMode {
                                 goHome)
                 )
         );
-        sleep(560);
     }
 }
