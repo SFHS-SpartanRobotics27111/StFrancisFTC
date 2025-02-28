@@ -15,8 +15,8 @@ import org.firstinspires.ftc.teamcode.hardware.Arm;
 import org.firstinspires.ftc.teamcode.hardware.Claw;
 import org.firstinspires.ftc.teamcode.hardware.PinpointDrive;
 
-@Autonomous(name = "2 Specimen on High Chamber: Close", group = "Linear OpMode")
-public final class ClawAuto_RR extends LinearOpMode {
+@Autonomous(name = "2 Specimen on High Chamber: Far", group = "Linear OpMode")
+public final class ClawAuto_RR2 extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -45,12 +45,12 @@ public final class ClawAuto_RR extends LinearOpMode {
 
         Action pushCycle1 = drive
                 .actionBuilder(new Pose2d(43, -13, -Math.PI / 2))
-                .strafeTo(new Vector2d(43, -56))
-                .strafeTo(new Vector2d(43, -51))
+                .strafeTo(new Vector2d(43, -55))
+                .lineToY(-50)
                 .build();
 
         TrajectoryActionBuilder splineToScore2 = drive
-                .actionBuilder(new Pose2d(43, -51, -Math.PI / 2))
+                .actionBuilder(new Pose2d(43, -50, -Math.PI / 2))
                 .setTangent(1)
                 .splineToLinearHeading(new Pose2d(0, -50, Math.PI / 2), Math.PI / 2)
                 .strafeTo(new Vector2d(0, -42));
