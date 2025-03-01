@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.hardware.Arm;
 import org.firstinspires.ftc.teamcode.hardware.Claw;
 import org.firstinspires.ftc.teamcode.hardware.PinpointDrive;
 
-@Autonomous(name = "2 Specimen on High Chamber: Far", group = "Linear OpMode")
+@Autonomous(name = "2 Specimen on High Chamber: Default", group = "Linear OpMode")
 public final class ClawAuto_RR2 extends LinearOpMode {
 
     @Override
@@ -49,21 +49,22 @@ public final class ClawAuto_RR2 extends LinearOpMode {
                 .lineToY(-50)
                 .build();
 
-        TrajectoryActionBuilder splineToScore2 = drive
+        Action splineToScore2 = drive
                 .actionBuilder(new Pose2d(43, -50, -Math.PI / 2))
                 .setTangent(1)
                 .splineToLinearHeading(new Pose2d(0, -50, Math.PI / 2), Math.PI / 2)
-                .strafeTo(new Vector2d(0, -42));
+                .strafeTo(new Vector2d(0, -42))
+                .build();
 
-        Action splineToPickUpLast = drive
+        Action splineToPushLast = drive
                 .actionBuilder(new Pose2d(0, -42, Math.PI / 2))
                 .lineToY(-60)
-                .splineToLinearHeading(new Pose2d(50, -25, -Math.PI / 2), -Math.PI / 2)
+                .splineToLinearHeading(new Pose2d(54, -25, -Math.PI / 2), -Math.PI / 2)
                 .build();
 
         Action goHome = drive
-                .actionBuilder(new Pose2d(50, -25, -Math.PI / 2))
-                .strafeTo(new Vector2d(50, -58))
+                .actionBuilder(new Pose2d(54, -25, -Math.PI / 2))
+                .strafeTo(new Vector2d(54, -58))
                 .turn(Math.toRadians(175))
                 .build();
 
@@ -90,11 +91,11 @@ public final class ClawAuto_RR2 extends LinearOpMode {
                         new SleepAction(0.5),
                         new ParallelAction(
                                 arm.moveArm(arm.ARM_SCORE_SPECIMEN + 8),
-                                splineToScore2.build()
+                                splineToScore2
                         ),
                         claw.moveClawAction(true),
                         new SleepAction(0.3),
-                        splineToPickUpLast,
+                        splineToPushLast,
                         new ParallelAction(
                         arm.moveArm(arm.ARM_COLLAPSED_IN),
                         claw.moveClawAction(false),
