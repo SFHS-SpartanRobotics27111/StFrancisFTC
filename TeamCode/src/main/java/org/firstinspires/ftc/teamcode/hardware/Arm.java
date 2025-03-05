@@ -18,12 +18,12 @@ public class Arm {
                     * 250047.0 / 4913.0
                     * 100.0 / 20.0
                     * 1 / 360.0;
-    final double ARM_COLLAPSED_IN = 0;
-    final double ARM_COLLECT = 256 * ARM_TICKS_PER_DEGREE;
-    final double ARM_CLEAR_BARRIER = 221 * ARM_TICKS_PER_DEGREE;
-    final double ARM_SCORE_SPECIMEN = 176 * ARM_TICKS_PER_DEGREE;
-    final double ARM_ATTACH_HANGING_HOOK = 119 * ARM_TICKS_PER_DEGREE;
-    final double ARM_WINCH_ROBOT = 14 * ARM_TICKS_PER_DEGREE;
+    public final double ARM_COLLAPSED_IN = 0;
+    public final double ARM_COLLECT = 256 * ARM_TICKS_PER_DEGREE;
+    public final double ARM_CLEAR_BARRIER = 221 * ARM_TICKS_PER_DEGREE;
+    public final double ARM_SCORE_SPECIMEN = 176 * ARM_TICKS_PER_DEGREE;
+    public final double ARM_ATTACH_HANGING_HOOK = 119 * ARM_TICKS_PER_DEGREE;
+    public final double ARM_WINCH_ROBOT = 14 * ARM_TICKS_PER_DEGREE;
     final double FUDGE_FACTOR = 20 * ARM_TICKS_PER_DEGREE;
     private final Telemetry telemetry;
     public DcMotor arm;
@@ -40,10 +40,6 @@ public class Arm {
         arm.setTargetPosition((int) ARM_COLLAPSED_IN);
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
-    public double getARM_SCORE_SPECIMEN() {
-        return ARM_SCORE_SPECIMEN;
     }
 
     public void moveArmWithEncoder(boolean cross, boolean circle, boolean square, boolean triangle, boolean up, boolean down, double r2, double l2) {

@@ -6,6 +6,8 @@ import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.hardware.PinpointDrive;
+
 @Autonomous(name = "ODOMETRY: Robot Auto Drive 3 Sample Net Zone + LV 1 Ascent", group = "Linear OpMode")
 public final class Blue_NetZone_RR_Auto extends LinearOpMode {
     @Override
@@ -33,8 +35,8 @@ public final class Blue_NetZone_RR_Auto extends LinearOpMode {
                         .strafeTo(new Vector2d(62, 56))
                         .strafeTo(new Vector2d(62, 9))
                         .strafeTo(new Vector2d(31, 9))
-                        .turn(Math.toRadians(90))
-                        .strafeTo(new Vector2d(17, 9))
+                        .turn(Math.toRadians(179))
+
                         .build()
         );
     }
