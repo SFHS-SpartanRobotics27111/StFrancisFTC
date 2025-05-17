@@ -28,9 +28,8 @@ Team code for St. Francis
 -   Run and stop the program in Android Studio
 -   Select and start the OpMode on the Driver Hub
 
-# Robot Information
+# Robot Information [OUTDATED]
 
-[#!Section Outdated]
 This robot has a two-motor differential-steered (sometimes called tank or skid steer) drivetrain
 with a left and right drive motor.
 

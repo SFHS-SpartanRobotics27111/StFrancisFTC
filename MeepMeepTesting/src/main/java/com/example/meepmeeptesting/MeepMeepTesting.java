@@ -1,4 +1,4 @@
-
+//meep meep is a auto visualizer for the RoadRunner auto library, you should be switching to PedroPathing for next year though so this will change
 package com.example.meepmeeptesting;
 
 import com.acmerobotics.roadrunner.Action;

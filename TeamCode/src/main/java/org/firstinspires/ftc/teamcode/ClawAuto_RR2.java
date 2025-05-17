@@ -14,28 +14,37 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.hardware.Arm;
 import org.firstinspires.ftc.teamcode.hardware.Claw;
 import org.firstinspires.ftc.teamcode.hardware.PinpointDrive;
-
+//primary into the deep auto
 @Autonomous(name = "2 Specimen on High Chamber: Default", group = "Linear OpMode")
 public final class ClawAuto_RR2 extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        //this will change when you swap libs but roadrunner tutorial ig
+        //to make the most of this library we predefine all these actions and positions
+        //beginPose is where the robot should be starting from
         Pose2d beginPose = new Pose2d(10, -65, -Math.PI);
 
+        //construct our motors and stuff
         PinpointDrive drive = new PinpointDrive(hardwareMap, beginPose);
         Arm arm = new Arm(this);
         Claw claw = new Claw(this);
 
+        //drive to the chamber by making a new actionbuilder with end position of the last move
+        //then strafe to a linear heading moves us a new xy position while rotating to the defined heading and then build the action
         Action toChamber = drive
                 .actionBuilder(beginPose)
                 .strafeToLinearHeading(new Vector2d(0, -42), Math.toRadians(90))
                 .build();
-
+        
+        //line to y makes a line to a y position however will go to a weird x positon if your heading is cooked
         Action backup = drive
                 .actionBuilder(new Pose2d(0, -42, Math.PI / 2))
                 .lineToY(-65)
                 .build();
 
+        //splining... ugh. spline sort of looks like a cubic graph
+        //it is much better in pedropathing where you can like make a custom one that hits certain points in a line or something
         Action splineToPush = drive
                 .actionBuilder(new Pose2d(0, -65, Math.PI / 2))
                 .setTangent(0)
@@ -68,6 +77,7 @@ public final class ClawAuto_RR2 extends LinearOpMode {
                 .turn(Math.toRadians(175))
                 .build();
 
+        //this is the initial action to close onto the preload when you initialize
         Actions.runBlocking(
                 claw.moveClawAction(false)
         );

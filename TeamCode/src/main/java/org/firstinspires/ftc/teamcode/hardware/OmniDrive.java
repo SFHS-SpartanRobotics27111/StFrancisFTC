@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
+//OmniDrive might get complicated
 public class OmniDrive {
     private final ElapsedTime runtime = new ElapsedTime();
     private final String LEFT_FRONT_DRIVE = "left_front_drive";
@@ -20,8 +21,10 @@ public class OmniDrive {
     public DcMotor leftBackDrive;
     public DcMotor rightFrontDrive;
     public DcMotor rightBackDrive;
+    //IMU is an acronym for something you will have to google, it handles all the positioning stuff for holonomic driving to work
     public IMU imu;
 
+    //chonky ahh constructor
     public OmniDrive(LinearOpMode op) {
         telemetry = op.telemetry;
         leftFrontDrive = op.hardwareMap.get(DcMotor.class, LEFT_FRONT_DRIVE);
@@ -41,6 +44,7 @@ public class OmniDrive {
         rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        //this lets the IMU know all the stuff needed for forward to be forward
         IMU.Parameters parameters = new IMU.Parameters(
                 new RevHubOrientationOnRobot(
                         RevHubOrientationOnRobot.LogoFacingDirection.UP,
@@ -49,23 +53,24 @@ public class OmniDrive {
         );
         imu.initialize(parameters);
     }
-
+    //our field centric drive. it has some simple trig, hope you know what a radian is
     public void driveFirstPerson(double driveY, double driveX, double turn, boolean resetYaw) {
         double max;
-
+        
+        //this the rotation of the robot in radians 
         double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
+        //calculate the transformation so forward continues to be forward even when turned
         double rotX = driveX * Math.cos(-botHeading) - driveY * Math.sin(-botHeading);
         double rotY = driveX * Math.sin(-botHeading) + driveY * Math.cos(-botHeading);
 
+        //normalizing value for some weird strafing behavior
         rotX *= 1.1;
-        //Commented out currently... uncomment in the event of weird strafing behavior
-        //there was weird strafing behavior...
-
         // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
 
         // Combine the joystick requests for each axis-motion to determine each wheel's power.
         // Set up a variable for each drive wheel to save the power level for telemetry.
+        // Unit circle ahh power delivery IYKYK
         double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(turn), 1);
         double leftFrontPower = (rotY + rotX + turn) / denominator;
         double rightFrontPower = (rotY - rotX - turn) / denominator;
@@ -91,6 +96,7 @@ public class OmniDrive {
         leftBackDrive.setPower(leftBackPower);
         rightBackDrive.setPower(rightBackPower);
 
+        //if field centric drive gets cooked rotate to a cardinal direction and then reset the yaw
         if (resetYaw) {
             imu.resetYaw();
         }
